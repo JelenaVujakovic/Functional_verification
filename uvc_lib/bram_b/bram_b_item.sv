@@ -4,8 +4,8 @@
 class bram_b_item extends uvm_sequence_item;
   
   // item fields
-  rand bit [15:0] m_data_b_out;
-  rand bit [31:0] m_addrb;
+  rand bit [31:0] m_data_b_out;
+  bit [31:0] m_addrb;
   bit en_b;
   
   // registration macro    

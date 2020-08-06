@@ -18,7 +18,7 @@ class axi_lite_item extends uvm_sequence_item;
     `uvm_field_int(write, UVM_ALL_ON)
   `uvm_object_utils_end
 
-  // constraints
+
   constraint c_addr {
       (addr == 0 || addr == 4 || addr == 8 );
   }

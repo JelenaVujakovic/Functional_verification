@@ -60,7 +60,7 @@ task bram_b_monitor::run_phase(uvm_phase phase);
       begin
         collect_item();    
       end
-    join_any // run_phase_fork_block
+    join_any
     disable fork;
   end
 

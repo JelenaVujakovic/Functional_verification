@@ -75,7 +75,6 @@ task axi_lite_driver::process_item(axi_lite_item item);
   begin
      read_trans(item);
   end
-   //@(negedge m_vif.reset_n);
  join
  disable fork;
 endtask : process_item
@@ -93,7 +92,7 @@ endtask : process_item
    m_vif.s_axi_wstrb = 4'b1111;
    m_vif.s_axi_wdata = item.data;
    m_vif.s_axi_bready = 1;
-   @(posedge m_vif.clock iff m_vif.s_axi_awready==1);
+   @(pogedge m_vif.clock iff m_vif.s_axi_awready==1);
    `uvm_info(get_type_name(), $sformatf("Item to be driven: \n%s", item.sprint()), UVM_HIGH)
    @(posedge m_vif.clock iff m_vif.s_axi_awready==0);
    m_vif.s_axi_awvalid = 0;
