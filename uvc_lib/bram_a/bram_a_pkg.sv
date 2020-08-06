@@ -16,9 +16,8 @@ import uvm_pkg::*;
 `include "bram_a_agent.sv"
 `include "bram_a_env.sv"
 `include "bram_a_basic_seq.sv"
+`include "bram_a_if.sv"
 
 endpackage : bram_a_pkg
-
-`include "bram_a_if.sv"
 
 `endif // BRAM_A_PKG_SV

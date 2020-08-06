@@ -3,9 +3,7 @@
 
 parameter int BLOCK_SIZE = 8192;
 
-parameter int RESET_REG_ADDR = 0;
-parameter int START_REG_ADDR = 4;
-parameter int READY_REG_ADDR = 8;
-
+parameter int START_REG_ADDR = 8;
+parameter int READY_REG_ADDR = 12;
 
 `endif // AXI_LITE_COMMON_SV

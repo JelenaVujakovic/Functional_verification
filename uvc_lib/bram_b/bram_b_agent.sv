@@ -102,4 +102,4 @@ function void bram_b_agent::print_cfg();
   `uvm_info(get_type_name(), $sformatf("Configuration: \n%s", m_cfg.sprint()), UVM_HIGH)
 endfunction : print_cfg
 
-`endif // BRAM_B_AGENT_SV
+`endif 

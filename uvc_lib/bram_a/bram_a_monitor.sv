@@ -87,7 +87,7 @@ task bram_a_monitor::collect_item();
      m_item.ena = m_vif.ena;
   
    //print item
-   `uvm_info(get_type_name(), $sformatf("Address of A is: \t%d, data is : \t%d", m_item.m_addr_a_out, m_vif.data_a_in), UVM_HIGH)
+   `uvm_info(get_type_name(), $sformatf("Address of A is: \t%d, data is : \t%d", m_item.m_addr_a_out, m_vif.dia), UVM_HIGH)
  
     // write analysis port
     m_aport.write(m_item);    

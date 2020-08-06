@@ -11,6 +11,10 @@ interface bram_a_if(input clock, input reset_n);
   logic [31:0] addra;
   logic ena;
   logic wea;
+  //dodato zbog greske koju izbacuje simulator kad se na dia port ne dovede nista ili .(open)
+  logic [31:0] dina;
+    
+  
   
 endinterface : bram_a_if
 

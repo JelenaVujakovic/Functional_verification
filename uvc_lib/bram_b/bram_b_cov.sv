@@ -1,4 +1,4 @@
-//Coverage za bram b je prebacen u coverage_collector
+//Coverage za bram C je prebacen u coverage_collector
 `ifndef BRAM_B_COV_SV
 `define BRAM_B_COV_SV
 
@@ -27,4 +27,4 @@ function void bram_b_cov::write(bram_b_item t);
  // bram_b_cg.sample();
 endfunction : write
 
-`endif // BRAM_B_COV_SV
+`endif 

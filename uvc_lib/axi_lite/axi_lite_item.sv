@@ -4,7 +4,7 @@
 class axi_lite_item extends uvm_sequence_item;
   
    // item fields
-       bit [31:0] addr;
+  rand bit [3:0] addr;
   rand bit [31:0] data;
   rand bit write; //pomocni signal za write operaciju
   rand bit read; //pomocni signal za read
@@ -20,7 +20,7 @@ class axi_lite_item extends uvm_sequence_item;
 
   // constraints
   constraint c_addr {
-      (addr % 4 == 0);
+      (addr == 0 || addr == 4 || addr == 8 );
   }
 
   // constructor  

@@ -29,6 +29,7 @@ class bram_b_monitor extends uvm_monitor;
   // collect item
   extern virtual task collect_item();
 
+
 endclass : bram_b_monitor
 
 // constructor
@@ -79,17 +80,20 @@ task bram_b_monitor::collect_item();
  // `uvm_info(get_type_name(), "Reset de-asserted. Starting to collect items...", UVM_HIGH)
   
   forever begin    
-   
-   @(posedge m_vif.clock iff m_vif.enb === 1'b1); 
-     m_item.m_addr_b_out = m_vif.addrb; 
-     m_item.m_data_b_in = m_vif.data_b_in; 
-     m_item.enb = m_vif.enb; 
+
+   @(posedge m_vif.clock iff m_vif.enb === 1);
+     m_item.m_addrb = m_vif.addrb;
+     if(m_vif.web === 1) begin
+      m_item.m_data_b_out = m_vif.data_b_out;
+      m_item.en_b = m_vif.enb;
+     end
   
    //print item
-   `uvm_info(get_type_name(), $sformatf("Address of B is: %d, data is : %d", m_item.m_addr_b_out, m_item.m_data_b_in), UVM_HIGH)
+   `uvm_info(get_type_name(), $sformatf("Adress C is: %d, data is %d", m_item.m_addrb, m_item.m_data_b_out), UVM_HIGH)
+ 
     // write analysis port
-    m_aport.write(m_item);   
-  end // forever begin  
+    m_aport.write(m_item); 
+  end // forever begin 
 endtask : collect_item
 
-`endif // BRAM_B_MONITOR_SV
+`endif 

@@ -7,7 +7,7 @@ interface bram_b_if(input clock, input reset_n);
   import uvm_pkg::*;
   
   // signals
-  logic signed [31:0]  data_b_in;
+  logic [31:0] data_b_out;
   logic [31:0] addrb;
   logic enb;
   logic web;

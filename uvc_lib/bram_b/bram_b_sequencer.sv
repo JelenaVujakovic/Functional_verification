@@ -1,3 +1,4 @@
+//Ovaj agent je pasiv i sekvencer se ne koristi u tom slucaju
 `ifndef BRAM_B_SEQUENCER_SV
 `define BRAM_B_SEQUENCER_SV
 
@@ -26,4 +27,4 @@ function void bram_b_sequencer::build_phase(uvm_phase phase);
   super.build_phase(phase);
 endfunction : build_phase
 
-`endif // BRAM_B_SEQUENCER_SV
+`endif

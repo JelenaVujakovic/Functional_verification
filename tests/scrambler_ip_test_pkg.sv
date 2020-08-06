@@ -1,5 +1,5 @@
-`ifndef CONV_IP_TEST_PKG_SV
-`define CONV_IP_TEST_PKG_SV
+`ifndef SCRAMBLER_IP_TEST_PKG_SV
+`define SCRAMBLER_IP_TEST_PKG_SV
 
 package scrambler_ip_test_pkg;
 
@@ -15,9 +15,9 @@ import axi_lite_pkg::*;
 import scrambler_ip_top_env_pkg::*;
 
 // include tests
-`include "test_scrambler_ip_base.sv"
-`include "test_scrambler_ip_read_reset_values.sv" //reset values
-`include "test_scrambler_ip_example.sv"
+`include "scrambler_ip_base.sv"
+`include "scrambler_ip_read_reset_values.sv" //reset values
+`include "scrambler_ip_example.sv"
 
 endpackage : scrambler_ip_test_pkg
 

@@ -4,7 +4,7 @@
 class bram_b_agent_cfg extends uvm_object;
   
   // configuration fields
-  uvm_active_passive_enum m_is_active = UVM_PASSIVE;
+  uvm_active_passive_enum m_is_active = UVM_ACTIVE;
   bit m_has_checks;
   bit m_has_coverage;  
   
@@ -25,4 +25,4 @@ function bram_b_agent_cfg::new(string name = "bram_b_agent_cfg");
   super.new(name);
 endfunction : new
 
-`endif // BRAM_B_AGENT_CFG_SV
+`endif 

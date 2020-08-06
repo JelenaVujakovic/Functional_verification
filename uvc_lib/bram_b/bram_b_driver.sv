@@ -42,7 +42,7 @@ task bram_b_driver::run_phase(uvm_phase phase);
 
   // init signals
   m_vif.addrb <= 0;
-  m_vif.data_b_in <= 0;
+  m_vif.data_b_out <= 0;
   
   forever begin
     seq_item_port.get_next_item(m_req);
@@ -53,12 +53,16 @@ endtask : run_phase
 
 // process item
 task bram_b_driver::process_item(bram_b_item item);
-
- // wait until reset is de-asserted
+  // print item
+  `uvm_info(get_type_name(), $sformatf("Item to be driven: \n%s", item.sprint()), UVM_HIGH)
+  
+  // wait until reset is de-asserted
+  wait (m_vif.reset_n == 1);
   
   // drive signals
-  
+ // @(posedge m_vif.clock iff m_vif.enable_b === 1'b1);
+  //  m_vif.addrb <= item.m_addrb;
     
 endtask : process_item
 
-`endif // BRAM_B_DRIVER_SV
+`endif 

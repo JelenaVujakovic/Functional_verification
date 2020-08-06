@@ -24,4 +24,4 @@ function bram_b_cfg::new(string name = "bram_b_cfg");
   m_agent_cfg = bram_b_agent_cfg::type_id::create("m_agent_cfg");
 endfunction : new
 
-`endif // BRAM_B_CFG_SV
+`endif 

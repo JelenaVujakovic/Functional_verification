@@ -35,7 +35,7 @@ task bram_a_basic_seq::body();
   start_item(req);
   
   if(!req.randomize() with {
-                             m_data_a_in.size() == m_data_a.size(); 
+                             m_data_a_in.size() == local::m_data_a.size(); 
                              foreach (m_data_a_in[i]) {m_data_a_in[i]== m_data_a[i];}
                             }) 
   begin

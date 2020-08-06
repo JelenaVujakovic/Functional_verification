@@ -7,7 +7,7 @@ class scrambler_ip_env_top extends uvm_env;
   `uvm_component_utils(scrambler_ip_env_top)
 
   // configuration reference
-  conv_ip_top_cfg m_cfg;
+  scrambler_ip_top_cfg m_cfg;
     
   // component instance
   axi_lite_env m_axi_lite_env;
@@ -38,7 +38,7 @@ function void scrambler_ip_env_top::build_phase(uvm_phase phase);
   super.build_phase(phase);
   
   // get configuration
-  if(!uvm_config_db #(conv_ip_top_cfg)::get(this, "", "m_cfg", m_cfg)) begin
+  if(!uvm_config_db #(scrambler_ip_top_cfg)::get(this, "", "m_cfg", m_cfg)) begin
     `uvm_fatal(get_type_name(), "Failed to get configuration object from config DB!")
   end
 
@@ -67,7 +67,7 @@ function void scrambler_ip_env_top::connect_phase(uvm_phase phase);
   //scoreboard
   m_axi_lite_env.m_agent.m_monitor.m_aport.connect(m_scoreboard.m_axi_lite);
   m_bram_a_env.m_agent.m_monitor.m_aport.connect(m_scoreboard.m_bram_a);
-  m_bram_b_env.m_agent.m_monitor.m_aport.connect(m_scoreboard.m_bram_b);
+  //m_bram_b_env.m_agent.m_monitor.m_aport.connect(m_scoreboard.m_bram_b);
 
  
 endfunction : connect_phase

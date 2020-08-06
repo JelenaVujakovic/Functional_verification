@@ -8,7 +8,7 @@ class axi_lite_basic_seq extends uvm_sequence #(axi_lite_item);
   
   // sequencer pointer macro
   `uvm_declare_p_sequencer(axi_lite_sequencer)
-  rand bit [31:0] addr;
+  rand bit [3:0] addr;
   rand bit [31:0] data;
   // constructor
   extern function new(string name = "axi_lite_basic_seq");
@@ -16,8 +16,8 @@ class axi_lite_basic_seq extends uvm_sequence #(axi_lite_item);
   extern virtual task body();
   
   
-  constraint c_addr {
-      (addr == 0 || addr == 4 || addr == 8);
+   constraint c_addr {
+      (addr == 0 || addr == 4 || addr == 8 );
   }
 
 endclass : axi_lite_basic_seq

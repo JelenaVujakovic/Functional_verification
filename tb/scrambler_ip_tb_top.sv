@@ -28,7 +28,7 @@ module scrambler_ip_tb_top;
     .s00_axi_aresetn (reset_n),
     .s00_axi_aclk    (clock),
     .s00_axi_awaddr  (axi_lite_if_inst.s_axi_awaddr),
-    .s00_axi_awprot  (0),
+    .s00_axi_awprot  ((axi_lite_if_inst.s_axi_awprot),
     .s00_axi_awvalid (axi_lite_if_inst.s_axi_awvalid),
     .s00_axi_awready (axi_lite_if_inst.s_axi_awready),
     .s00_axi_wdata   (axi_lite_if_inst.s_axi_wdata),
@@ -53,10 +53,10 @@ module scrambler_ip_tb_top;
     .enb             (bram_b_if_inst.enb),
     .addra           (bram_a_if_inst.addra),
     .addrb           (bram_b_if_inst.addrb),
-    .dia             (open),
-    .doa             (bram_a_if_inst.dia),
-    .dib             (open),
-    .dob             (bram_b_if_inst.dib),
+    .dina            (bram_a_if_inst.dina),
+    .douta           (bram_a_if_inst.dia),
+    .dinb            (bram_b_if_inst.data_b_out),
+    .doutb           (0),
     .wea             (bram_a_if_inst.wea),
     .web             (bram_b_if_inst.web)
     );
@@ -80,8 +80,7 @@ module scrambler_ip_tb_top;
   always begin : clock_gen_block
     #5 clock <= ~clock;
   end
-  
-  initial begin : timeformat
+   initial begin : timeformat
     $timeformat(-9,0,"ns",5);
   end
   

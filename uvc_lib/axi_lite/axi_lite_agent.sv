@@ -19,7 +19,7 @@ class axi_lite_agent extends uvm_agent;
   axi_lite_driver m_driver;
   axi_lite_sequencer m_sequencer;
   axi_lite_monitor m_monitor;
-  axi_lite_cov m_cov;
+  //axi_lite_cov m_cov;
   
   // constructor
   extern function new(string name, uvm_component parent);
@@ -63,7 +63,7 @@ function void axi_lite_agent::build_phase(uvm_phase phase);
   end
   m_monitor = axi_lite_monitor::type_id::create("m_monitor", this);
   if (m_cfg.m_has_coverage == 1) begin
-    //m_cov = axi_lite_cov::type_id::create("m_cov", this);
+    m_cov = axi_lite_cov::type_id::create("m_cov", this);
   end  
 endfunction : build_phase
 

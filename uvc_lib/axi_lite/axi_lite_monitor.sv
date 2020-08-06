@@ -80,7 +80,33 @@ task axi_lite_monitor::collect_item();
   @(posedge m_vif.clock iff m_vif.reset_n == 1);
   `uvm_info(get_type_name(), "Reset de-asserted. Starting to collect items...", UVM_LOW)
   
-   
+    // WRITE
+   fork
+    begin
+     forever begin
+       @(posedge m_vif.clock iff m_vif.s_axi_awready === 1);
+        m_item.addr = m_vif.s_axi_awaddr;
+        m_item.data = m_vif.s_axi_wdata;
+        m_item.write = 1;
+        `uvm_info(get_type_name(), " --- WRITE --- ", UVM_LOW)
+        `uvm_info(get_type_name(), $sformatf("Item collected: \n%s", m_item.sprint()), UVM_HIGH)
+        m_aport.write(m_item);
+     end
+    end
+    // READ
+    begin
+     forever begin
+       @(posedge m_vif.clock iff m_vif.s_axi_arready === 1);
+       m_item.addr = m_vif.s_axi_araddr;
+       @(posedge m_vif.clock iff m_vif.s_axi_rvalid === 1);
+       m_item.data = m_vif.s_axi_rdata;
+       m_item.read = 1; 
+       `uvm_info(get_type_name(), " --- READ --- ", UVM_LOW)
+       `uvm_info(get_type_name(), $sformatf("Item collected: \n%s", m_item.sprint()), UVM_HIGH)
+       m_aport.write(m_item);
+     end
+    end
+    join
 endtask : collect_item
 
 // print item

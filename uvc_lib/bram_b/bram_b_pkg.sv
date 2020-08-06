@@ -6,7 +6,6 @@ package bram_b_pkg;
 `include "uvm_macros.svh"
 import uvm_pkg::*;
 
-`include "bram_b_common.sv"
 `include "bram_b_agent_cfg.sv"
 `include "bram_b_cfg.sv"
 `include "bram_b_item.sv"
@@ -17,9 +16,8 @@ import uvm_pkg::*;
 `include "bram_b_agent.sv"
 `include "bram_b_env.sv"
 
-
 endpackage : bram_b_pkg
 
 `include "bram_b_if.sv"
 
-`endif // BRAM_B_PKG_SV
+`endif 

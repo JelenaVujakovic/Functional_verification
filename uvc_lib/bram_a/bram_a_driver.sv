@@ -41,7 +41,7 @@ task bram_a_driver::run_phase(uvm_phase phase);
   super.run_phase(phase);
 
   m_vif.dia <= 0;
-  item.address = 0;
+ 
 
   forever begin
     seq_item_port.get_next_item(m_req);
@@ -61,12 +61,12 @@ task bram_a_driver::process_item(bram_a_item item);
   for(int i = 0; i <= 8191; i++) begin
   @(posedge m_vif.ena);
         if(item.address > 32764) begin
-                `uvm_info(get_type_name(), $sformatf("Adress is %d",item.address),UVM_LOW)
+                `uvm_info(get_type_name(), $sformatf("Adress %d is out of block size. ",item.address),UVM_LOW)
         end
         else begin
-            m_vif.addr_a <= item.address;
+            item.address = m_vif.addra;
             m_vif.dia <= item.m_data_a_in[item.address];
-            `uvm_info(get_type_name(), $sformatf("Data is %d, adress is %d",m_vif.a_data_i,item.address),UVM_LOW)
+            `uvm_info(get_type_name(), $sformatf("Data is %d, adress is %d",m_vif.dia,item.address),UVM_LOW)
             item.address += 4;  
         end              
   end      

@@ -28,7 +28,7 @@ interface axi_lite_if(input clock, input reset_n);
   logic [1:0] s_axi_rresp; //status kompletirane transakcije citanja
   logic s_axi_rvalid; //indikacija validnosti podatka
   logic s_axi_rready;
-  
+  logic [3:0] s_axi_awprot;
 
 endinterface : axi_lite_if
 
