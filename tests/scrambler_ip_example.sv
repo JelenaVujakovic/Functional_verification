@@ -1,5 +1,5 @@
-`ifndef TEST_SCRAMBLER_IP_EXAMPLE_SV
-`define TEST_SCRAMBLER_IP_EXAMPLE_SV
+`ifndef TEST_scrambler_IP_EXAMPLE_SV
+`define TEST_scrambler_IP_EXAMPLE_SV
 
 // example test
 class test_scrambler_ip_example extends test_scrambler_ip_base;
@@ -7,7 +7,8 @@ class test_scrambler_ip_example extends test_scrambler_ip_base;
   // registration macro
   `uvm_component_utils(test_scrambler_ip_example)
   
-
+ scrambler_ip_vir_sequence m_vir_seq;
+ axi_lite_basic_seq axi_lite_seq;
 
   // constructor
   extern function new(string name, uvm_component parent);
@@ -21,7 +22,8 @@ endclass : test_scrambler_ip_example
 // constructor
 function test_scrambler_ip_example::new(string name, uvm_component parent);
   super.new(name, parent);
-
+  m_vir_seq = scrambler_ip_vir_sequence::type_id::create("m_vir_seq", this);
+  axi_lite_seq = axi_lite_basic_seq::type_id::create("axi_lite_seq", this);
 endfunction : new
 
 // run phase
@@ -32,7 +34,9 @@ task test_scrambler_ip_example::run_phase(uvm_phase phase);
   `uvm_info(get_type_name(), "TEST STARTED", UVM_LOW)
  
 
- 
+  assert(m_vir_seq.randomize());
+  m_vir_seq.start(m_scrambler_ip_env_top.m_virt_seqr);
+  #200ns;
      
   uvm_test_done.drop_objection(this, get_type_name());    
   `uvm_info(get_type_name(), "TEST FINISHED", UVM_LOW)
@@ -45,4 +49,4 @@ function void test_scrambler_ip_example::set_default_configuration();
   // redefine configuration
 endfunction : set_default_configuration
 
-`endif // TEST_SCRAMBLER_IP_EXAMPLE_SV
+`endif // TEST_scrambler_IP_EXAMPLE_SV

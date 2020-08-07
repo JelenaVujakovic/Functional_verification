@@ -1,5 +1,5 @@
-`ifndef TEST_SCRAMBLER_IP_BASE_SV
-`define TEST_SCRAMBLER_IP_BASE_SV
+`ifndef TEST_scrambler_IP_BASE_SV
+`define TEST_scrambler_IP_BASE_SV
 
 class test_scrambler_ip_base extends uvm_test;
   
@@ -84,7 +84,8 @@ function void test_scrambler_ip_base::set_default_configuration();
     m_cfg.m_bram_b_cfg.m_agent_cfg.m_has_coverage = 1;
     
 
+  
     
 endfunction : set_default_configuration
 
-`endif // TEST_SCRAMBLER_IP_BASE_SV
+`endif // TEST_scrambler_IP_BASE_SV

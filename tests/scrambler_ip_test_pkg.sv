@@ -16,7 +16,6 @@ import scrambler_ip_top_env_pkg::*;
 
 // include tests
 `include "scrambler_ip_base.sv"
-`include "scrambler_ip_read_reset_values.sv" //reset values
 `include "scrambler_ip_example.sv"
 
 endpackage : scrambler_ip_test_pkg

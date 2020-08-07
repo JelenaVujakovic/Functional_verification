@@ -80,10 +80,7 @@ module scrambler_ip_tb_top;
   always begin : clock_gen_block
     #5 clock <= ~clock;
   end
-   initial begin : timeformat
-    $timeformat(-9,0,"ns",5);
-  end
-  
+ 
   // run test
   initial begin : run_test_block
     run_test();
