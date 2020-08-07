@@ -28,7 +28,7 @@ class scrambler_ip_scoreboard extends uvm_scoreboard;
   
 	uvm_analysis_imp_axi_lite#(axi_lite_item, scrambler_ip_scoreboard) m_axi_lite;
 	uvm_analysis_imp_bram_a#(bram_a_item, scrambler_ip_scoreboard) m_bram_a;
-   // uvm_analysis_imp_bram_b#(bram_b_item, scrambler_ip_scoreboard) m_bram_b;
+    //uvm_analysis_imp_bram_b#(bram_b_item, scrambler_ip_scoreboard) m_bram_b;
  
 	
 	function new(string name = "scrambler_ip_scoreboard", uvm_component parent);

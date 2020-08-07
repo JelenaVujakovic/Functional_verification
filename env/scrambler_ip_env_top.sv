@@ -53,7 +53,7 @@ function void scrambler_ip_env_top::build_phase(uvm_phase phase);
   m_bram_b_env = bram_b_env::type_id::create("m_bram_b_env", this);
   m_virt_seqr = scrambler_ip_virtual_sequencer::type_id::create("m_virt_seqr", this);
   m_scoreboard = scrambler_ip_scoreboard::type_id::create("m_scoreboard", this);
-  //m_coverage = scrambler_ip_coverage_collector::type_id::create("m_coverage", this);
+ // m_coverage = scrambler_ip_coverage_collector::type_id::create("m_coverage", this);
   
 endfunction : build_phase
 
@@ -65,11 +65,11 @@ function void scrambler_ip_env_top::connect_phase(uvm_phase phase);
   m_virt_seqr.m_bram_b_seq = m_bram_b_env.m_agent.m_sequencer;
   m_virt_seqr.m_axi_lite_sequencer = m_axi_lite_env.m_agent.m_sequencer;
   //scoreboard
-  m_axi_lite_env.m_agent.m_monitor.m_aport.connect(m_scoreboard.m_axi_lite);
+ /* m_axi_lite_env.m_agent.m_monitor.m_aport.connect(m_scoreboard.m_axi_lite);
   m_bram_a_env.m_agent.m_monitor.m_aport.connect(m_scoreboard.m_bram_a);
-  //m_bram_b_env.m_agent.m_monitor.m_aport.connect(m_scoreboard.m_bram_b);
+  m_bram_b_env.m_agent.m_monitor.m_aport.connect(m_scoreboard.m_bram_b);
 
- 
+ */
 endfunction : connect_phase
 
 `endif // SCRAMBLER_IP_ENV_TOP_SV

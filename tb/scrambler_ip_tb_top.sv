@@ -28,7 +28,7 @@ module scrambler_ip_tb_top;
     .s00_axi_aresetn (reset_n),
     .s00_axi_aclk    (clock),
     .s00_axi_awaddr  (axi_lite_if_inst.s_axi_awaddr),
-    .s00_axi_awprot  ((axi_lite_if_inst.s_axi_awprot),
+    .s00_axi_awprot  (axi_lite_if_inst.s_axi_awprot),
     .s00_axi_awvalid (axi_lite_if_inst.s_axi_awvalid),
     .s00_axi_awready (axi_lite_if_inst.s_axi_awready),
     .s00_axi_wdata   (axi_lite_if_inst.s_axi_wdata),
