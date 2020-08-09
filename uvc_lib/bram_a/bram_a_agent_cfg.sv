@@ -1,3 +1,15 @@
+//------------------------------------------------------------------------------
+// Copyright (c) 2020 Elsys Eastern Europe
+// All rights reserved.
+//------------------------------------------------------------------------------
+// File name  : bram_a_agent_cfg.sv
+// Developer  : Jelena Vujakovic
+// Date       : Aug 8, 2020
+// Description: 
+// Notes      : 
+//
+//------------------------------------------------------------------------------
+
 `ifndef BRAM_A_AGENT_CFG_SV
 `define BRAM_A_AGENT_CFG_SV
 
@@ -7,12 +19,14 @@ class bram_a_agent_cfg extends uvm_object;
   uvm_active_passive_enum m_is_active = UVM_ACTIVE;
   bit m_has_checks;
   bit m_has_coverage;  
+  byte m_cfg_field;
   
   // registration macro
   `uvm_object_utils_begin(bram_a_agent_cfg)
     `uvm_field_enum(uvm_active_passive_enum, m_is_active, UVM_ALL_ON)
     `uvm_field_int(m_has_checks, UVM_ALL_ON)
     `uvm_field_int(m_has_coverage, UVM_ALL_ON)
+    `uvm_field_int(m_cfg_field, UVM_ALL_ON)
   `uvm_object_utils_end
   
   // constructor   

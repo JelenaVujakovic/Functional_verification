@@ -1,3 +1,15 @@
+//------------------------------------------------------------------------------
+// Copyright (c) 2020 Elsys Eastern Europe
+// All rights reserved.
+//------------------------------------------------------------------------------
+// File name  : bram_b_env.sv
+// Developer  : Jelena Vujakovic
+// Date       : Aug 8, 2020
+// Description: 
+// Notes      : 
+//
+//------------------------------------------------------------------------------
+
 `ifndef BRAM_B_ENV_SV
 `define BRAM_B_ENV_SV
 
@@ -40,4 +52,4 @@ function void bram_b_env::build_phase(uvm_phase phase);
   uvm_config_db#(bram_b_agent_cfg)::set(this, "m_agent", "m_cfg", m_cfg.m_agent_cfg);
 endfunction : build_phase
 
-`endif 
+`endif // BRAM_B_ENV_SV

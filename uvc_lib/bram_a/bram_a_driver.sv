@@ -1,3 +1,15 @@
+//------------------------------------------------------------------------------
+// Copyright (c) 2020 Elsys Eastern Europe
+// All rights reserved.
+//------------------------------------------------------------------------------
+// File name  : bram_a_driver.sv
+// Developer  : Jelena Vujakovic
+// Date       : Aug 8, 2020
+// Description: 
+// Notes      : 
+//
+//------------------------------------------------------------------------------
+
 `ifndef BRAM_A_DRIVER_SV
 `define BRAM_A_DRIVER_SV
 
@@ -40,9 +52,9 @@ endfunction : build_phase
 task bram_a_driver::run_phase(uvm_phase phase);
   super.run_phase(phase);
 
-  m_vif.dia <= 0;
- 
-
+  // init signals
+  m_vif.signal <= 0;
+  
   forever begin
     seq_item_port.get_next_item(m_req);
     process_item(m_req);
@@ -52,25 +64,15 @@ endtask : run_phase
 
 // process item
 task bram_a_driver::process_item(bram_a_item item);
-
+  // print item
+  `uvm_info(get_type_name(), $sformatf("Item to be driven: \n%s", item.sprint()), UVM_HIGH)
+  
   // wait until reset is de-asserted
   wait (m_vif.reset_n == 1);
   
   // drive signals
-  @(posedge m_vif.clock iff m_vif.reset_n == 1);
-  for(int i = 0; i <= 8191; i++) begin
-  @(posedge m_vif.ena);
-        if(item.address > 32764) begin
-                `uvm_info(get_type_name(), $sformatf("Adress %d is out of block size. ",item.address),UVM_LOW)
-        end
-        else begin
-            item.address = m_vif.addra;
-            m_vif.dia <= item.m_data_a_in[item.address];
-            `uvm_info(get_type_name(), $sformatf("Data is %d, adress is %d",m_vif.dia,item.address),UVM_LOW)
-            item.address += 4;  
-        end              
-  end      
-
+  @(posedge m_vif.clock);
+  m_vif.signal <= item.m_signal_value;
 endtask : process_item
 
 `endif // BRAM_A_DRIVER_SV

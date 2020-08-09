@@ -9,8 +9,8 @@
 
  ****************************************************************************/
 
-`ifndef axi_lite_agent_SV
-`define axi_lite_agent_SV
+`ifndef AXI_LITE_AGENT_SV
+`define AXI_LITE_AGENT_SV
     
 /**
  * Class: axi_lite_agent

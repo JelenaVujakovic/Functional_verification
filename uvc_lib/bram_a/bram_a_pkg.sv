@@ -1,3 +1,15 @@
+//------------------------------------------------------------------------------
+// Copyright (c) 2020 Elsys Eastern Europe
+// All rights reserved.
+//------------------------------------------------------------------------------
+// File name  : bram_a_pkg.sv
+// Developer  : Jelena Vujakovic
+// Date       : Aug 8, 2020
+// Description: 
+// Notes      : 
+//
+//------------------------------------------------------------------------------
+
 `ifndef BRAM_A_PKG_SV
 `define BRAM_A_PKG_SV
 
@@ -6,6 +18,7 @@ package bram_a_pkg;
 `include "uvm_macros.svh"
 import uvm_pkg::*;
 
+`include "bram_a_common.sv"
 `include "bram_a_agent_cfg.sv"
 `include "bram_a_cfg.sv"
 `include "bram_a_item.sv"
@@ -15,9 +28,10 @@ import uvm_pkg::*;
 `include "bram_a_cov.sv"
 `include "bram_a_agent.sv"
 `include "bram_a_env.sv"
-`include "bram_a_basic_seq.sv"
-`include "bram_a_if.sv"
+`include "bram_a_seq_lib.sv"
 
 endpackage : bram_a_pkg
+
+`include "bram_a_if.sv"
 
 `endif // BRAM_A_PKG_SV

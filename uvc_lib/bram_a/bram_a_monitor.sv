@@ -1,99 +1,123 @@
-/****************************************************************************
-    +-+-+-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+-+-+-+-+ +-+-+ +-+-+-+-+-+-+-+-+
-    |F|u|n|c|t|i|o|n|a|l| |V|e|r|i|f|i|c|a|t|i|o|n| |o|f| |H|a|r|d|w|a|r|e|
-    +-+-+-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+-+-+-+-+ +-+-+ +-+-+-+-+-+-+-+-+
+//------------------------------------------------------------------------------
+// Copyright (c) 2020 Elsys Eastern Europe
+// All rights reserved.
+//------------------------------------------------------------------------------
+// File name  : bram_a_monitor.sv
+// Developer  : Jelena Vujakovic
+// Date       : Aug 8, 2020
+// Description: 
+// Notes      : 
+//
+//------------------------------------------------------------------------------
 
-    FILE            bram_a_monitor.sv
+`ifndef BRAM_A_MONITOR_SV
+`define BRAM_A_MONITOR_SV
 
-    DESCRIPTION     
-
- ****************************************************************************/
-
-`ifndef bram_a_monitor_SV
-`define bram_a_monitor_SV
-
-/**
- * Class: bram_a_monitor
- */
 class bram_a_monitor extends uvm_monitor;
-    
-    // apb virtual interface
-    virtual bram_a_if m_vif;
-    
-    // configuration
-    bram_a_agent_cfg m_cfg;
-    
-    // TLM - from monitor to other components
-   // uvm_analysis_port #(bram_a_item) item_collected_port;
-    
-    // keep track of number of transactions
-    int unsigned num_transactions = 0;
-    
-    // current transaction
-    bram_a_item m_item;
-    
-    // UVM factory registration
-    `uvm_component_utils_begin(bram_a_monitor)
-        `uvm_field_object(m_cfg, UVM_DEFAULT | UVM_REFERENCE)
-    `uvm_component_utils_end
-    
- 
-
-    // new - constructor
-	function new(string name = "bram_a_monitor", uvm_component parent = null);
-		super.new(name, parent);
-	endfunction : new
-    
-    // UVM build_phase
-    function void build_phase(uvm_phase phase);
-        super.build_phase(phase);
-        // get configuration object from db
-        if(!uvm_config_db#(bram_a_agent_cfg)::get(this, "", "bram_a_agent_cfg", m_cfg))
-            `uvm_fatal("NOCONFIG",{"Config object must be set for: ",get_full_name(),".m_cfg"})
-    endfunction: build_phase
-    
-    // UVM connect_phase
-    function void connect_phase(uvm_phase phase);
-        super.connect_phase(phase);
-        // get interface from db
-        if(!uvm_config_db#(virtual bram_a_if)::get(this, "", "bram_a_if", m_vif))
-            `uvm_fatal("NOm_vif",{"virtual interface must be set for: ",get_full_name(),".m_vif"})    
-    endfunction : connect_phase
-    
-    // additional class methods
-    extern virtual task run_phase(uvm_phase phase);
-    extern virtual task collect_transactions();
-    extern virtual function void report_phase(uvm_phase phase);
+  
+  // registration macro
+  `uvm_component_utils(bram_a_monitor)
+  
+  // analysis port
+  uvm_analysis_port #(bram_a_item) m_aport;
+  
+  // virtual interface reference
+  virtual interface bram_a_if m_vif;
+  
+  // configuration reference
+  bram_a_agent_cfg m_cfg;
+  
+  // monitor item
+  bram_a_item m_item;
+  
+  // constructor
+  extern function new(string name, uvm_component parent);
+  // build phase
+  extern virtual function void build_phase(uvm_phase phase);
+  // run phase
+  extern virtual task run_phase(uvm_phase phase);
+  // handle reset
+  extern virtual task handle_reset();
+  // collect item
+  extern virtual task collect_item();
+  // print item
+  extern virtual function void print_item(bram_a_item item);
 
 endclass : bram_a_monitor
 
-// UVM run_phase
+// constructor
+function bram_a_monitor::new(string name, uvm_component parent);
+  super.new(name, parent);
+endfunction : new
+
+// build phase
+function void bram_a_monitor::build_phase(uvm_phase phase);
+  super.build_phase(phase);
+  
+  // create port
+  m_aport = new("m_aport", this);
+  
+  // create item
+  m_item = bram_a_item::type_id::create("m_item", this);
+endfunction : build_phase
+
+// connect phase
 task bram_a_monitor::run_phase(uvm_phase phase);
-    forever begin
-        @(posedge m_vif.reset_n); // reset dropped
-        `uvm_info(get_type_name(), "Reset dropped", UVM_MEDIUM)
-    
-        fork
-            collect_transactions(); // thread killed at reset
-            @(negedge m_vif.reset_n); // reset is active low
-        join_any
-        disable fork;
-    end
+  super.run_phase(phase);
+  
+  forever begin
+    fork : run_phase_fork_block
+      begin
+        handle_reset();
+      end
+      begin
+        collect_item();    
+      end
+    join_any // run_phase_fork_block
+    disable fork;
+  end
 endtask : run_phase
 
-// monitor apb interface and collect transactions
-task bram_a_monitor::collect_transactions();
-    forever begin
+// handle reset
+task bram_a_monitor::handle_reset();
+  // wait reset assertion
+  @(m_vif.reset_n iff m_vif.reset_n == 0);
+  `uvm_info(get_type_name(), "Reset asserted.", UVM_HIGH)
+endtask : handle_reset
+
+// collect item
+task bram_a_monitor::collect_item();  
+  // wait until reset is de-asserted
+  wait (m_vif.reset_n == 1);
+  `uvm_info(get_type_name(), "Reset de-asserted. Starting to collect items...", UVM_HIGH)
+  
+  forever begin    
+    // wait signal change
+    @(posedge m_vif.clock iff m_vif.signal === 1);
     
-    end // forever
-endtask : collect_transactions
+    // begin transaction recording
+    void'(begin_tr(m_item, "bram_a item"));
+    
+    // collect item
+    m_item.m_signal_value = m_vif.signal;
+    
+    // wait signal change
+    @(posedge m_vif.clock iff m_vif.signal === 0);
+    
+    // end transaction recording
+    end_tr(m_item);
+    
+    // print item
+    print_item(m_item);
+    
+    // write analysis port
+    m_aport.write(m_item);    
+  end // forever begin  
+endtask : collect_item
 
-// UVM report_phase
-function void bram_a_monitor::report_phase(uvm_phase phase);
-    // final report
-    `uvm_info(get_type_name(), $sformatf("Report: APB monitor collected %0d transfers", num_transactions), UVM_LOW);
-endfunction : report_phase
+// print item
+function void bram_a_monitor::print_item(bram_a_item item);
+  `uvm_info(get_type_name(), $sformatf("Item collected: \n%s", item.sprint()), UVM_HIGH)
+endfunction : print_item
 
-
-`endif
-
+`endif // BRAM_A_MONITOR_SV

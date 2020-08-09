@@ -1,3 +1,15 @@
+//------------------------------------------------------------------------------
+// Copyright (c) 2020 Elsys Eastern Europe
+// All rights reserved.
+//------------------------------------------------------------------------------
+// File name  : bram_b_driver.sv
+// Developer  : Jelena Vujakovic
+// Date       : Aug 8, 2020
+// Description: 
+// Notes      : 
+//
+//------------------------------------------------------------------------------
+
 `ifndef BRAM_B_DRIVER_SV
 `define BRAM_B_DRIVER_SV
 
@@ -41,8 +53,7 @@ task bram_b_driver::run_phase(uvm_phase phase);
   super.run_phase(phase);
 
   // init signals
-  m_vif.addrb <= 0;
-  m_vif.data_b_out <= 0;
+  m_vif.signal <= 0;
   
   forever begin
     seq_item_port.get_next_item(m_req);
@@ -59,7 +70,9 @@ task bram_b_driver::process_item(bram_b_item item);
   // wait until reset is de-asserted
   wait (m_vif.reset_n == 1);
   
-    
+  // drive signals
+  @(posedge m_vif.clock);
+  m_vif.signal <= item.m_signal_value;
 endtask : process_item
 
-`endif 
+`endif // BRAM_B_DRIVER_SV

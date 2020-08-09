@@ -1,4 +1,15 @@
-//Coverage za bram A je prebacen u coverage_collector
+//------------------------------------------------------------------------------
+// Copyright (c) 2020 Elsys Eastern Europe
+// All rights reserved.
+//------------------------------------------------------------------------------
+// File name  : bram_a_cov.sv
+// Developer  : Jelena Vujakovic
+// Date       : Aug 8, 2020
+// Description: 
+// Notes      : 
+//
+//------------------------------------------------------------------------------
+
 `ifndef BRAM_A_COV_SV
 `define BRAM_A_COV_SV
 
@@ -11,7 +22,17 @@ class bram_a_cov extends uvm_subscriber #(bram_a_item);
   bram_a_agent_cfg m_cfg;
   
   // coverage fields 
- 
+  bit m_signal_value_cov;
+  
+  // coverage groups
+  covergroup bram_a_cg;
+    option.per_instance = 1;
+
+    cp_signal_value : coverpoint m_signal_value_cov {
+      //option.weight = 0;
+    }
+  endgroup : bram_a_cg
+  
   // constructor
   extern function new(string name, uvm_component parent);
   // analysis implementation port function
@@ -22,12 +43,13 @@ endclass : bram_a_cov
 // constructor
 function bram_a_cov::new(string name, uvm_component parent);
   super.new(name, parent);
-
+  bram_a_cg = new();
 endfunction : new
 
 // analysis implementation port function
 function void bram_a_cov::write(bram_a_item t);
- // bram_a_cg.sample();
+  m_signal_value_cov = t.m_signal_value;
+  bram_a_cg.sample();
 endfunction : write
 
 `endif // BRAM_A_COV_SV

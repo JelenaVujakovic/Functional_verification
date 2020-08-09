@@ -2,7 +2,7 @@
 // Copyright (c) 2020 Elsys Eastern Europe
 // All rights reserved.
 //------------------------------------------------------------------------------
-// File name  : bram_a_basic_seq.sv
+// File name  : bram_b_basic_seq.sv
 // Developer  : Jelena Vujakovic
 // Date       : Aug 8, 2020
 // Description: 
@@ -10,16 +10,16 @@
 //
 //------------------------------------------------------------------------------
 
-`ifndef BRAM_A_BASIC_SEQ_SV
-`define BRAM_A_BASIC_SEQ_SV
+`ifndef BRAM_B_BASIC_SEQ_SV
+`define BRAM_B_BASIC_SEQ_SV
 
-class bram_a_basic_seq extends uvm_sequence #(bram_a_item);
+class bram_b_basic_seq extends uvm_sequence #(bram_b_item);
   
   // registration macro
-  `uvm_object_utils(bram_a_basic_seq)
+  `uvm_object_utils(bram_b_basic_seq)
   
   // sequencer pointer macro
-  `uvm_declare_p_sequencer(bram_a_sequencer)
+  `uvm_declare_p_sequencer(bram_b_sequencer)
   
   // fields
   rand bit m_signal_value;
@@ -30,23 +30,23 @@ class bram_a_basic_seq extends uvm_sequence #(bram_a_item);
   }
   
   // constructor
-  extern function new(string name = "bram_a_basic_seq");
+  extern function new(string name = "bram_b_basic_seq");
   // body task
   extern virtual task body();
 
-endclass : bram_a_basic_seq
+endclass : bram_b_basic_seq
 
 // constructor
-function bram_a_basic_seq::new(string name = "bram_a_basic_seq");
+function bram_b_basic_seq::new(string name = "bram_b_basic_seq");
   super.new(name);
 endfunction : new
 
 // body task
-task bram_a_basic_seq::body();
-  `uvm_info(get_type_name(), $sformatf("Sequence bram_a_basic_seq : set signal to %0d", m_signal_value), UVM_HIGH)
+task bram_b_basic_seq::body();
+  `uvm_info(get_type_name(), $sformatf("Sequence bram_b_basic_seq : set signal to %0d", m_signal_value), UVM_HIGH)
   
   //--------------------------------------------------
-  req = bram_a_item::type_id::create("req");
+  req = bram_b_item::type_id::create("req");
   
   start_item(req);
   
@@ -68,4 +68,4 @@ task bram_a_basic_seq::body();
   //--------------------------------------------------
 endtask : body
 
-`endif // BRAM_A_BASIC_SEQ_SV
+`endif // BRAM_B_BASIC_SEQ_SV
