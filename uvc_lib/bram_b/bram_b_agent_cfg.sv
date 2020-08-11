@@ -1,15 +1,3 @@
-//------------------------------------------------------------------------------
-// Copyright (c) 2020 Elsys Eastern Europe
-// All rights reserved.
-//------------------------------------------------------------------------------
-// File name  : bram_b_agent_cfg.sv
-// Developer  : Jelena Vujakovic
-// Date       : Aug 8, 2020
-// Description: 
-// Notes      : 
-//
-//------------------------------------------------------------------------------
-
 `ifndef BRAM_B_AGENT_CFG_SV
 `define BRAM_B_AGENT_CFG_SV
 

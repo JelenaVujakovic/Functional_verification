@@ -8,20 +8,19 @@ class axi_lite_basic_seq extends uvm_sequence #(axi_lite_item);
   
   // sequencer pointer macro
   `uvm_declare_p_sequencer(axi_lite_sequencer)
-  rand bit [3:0] addr;
-  rand bit [31:0] data;
+  
+  // fields
+  rand bit m_signal_value;
+  
+  // constraints
+  constraint m_signal_value_c {
+    soft m_signal_value == 1;
+  }
+  
   // constructor
   extern function new(string name = "axi_lite_basic_seq");
   // body task
   extern virtual task body();
-  
-   constraint c_data {
-       data < 256; data >= 0; 
-  }
-  
-   constraint c_addr {
-      (addr == 0 || addr == 4 || addr == 8);
-  }
 
 endclass : axi_lite_basic_seq
 
@@ -32,17 +31,29 @@ endfunction : new
 
 // body task
 task axi_lite_basic_seq::body();
-
+  `uvm_info(get_type_name(), $sformatf("Sequence axi_lite_basic_seq : set signal to %0d", m_signal_value), UVM_HIGH)
+  
+  //--------------------------------------------------
   req = axi_lite_item::type_id::create("req");
   
   start_item(req);
   
-  if(!req.randomize() with {addr == local::addr; data == local::data;}) begin
+  if(!req.randomize() with {
+    m_signal_value == local::m_signal_value;
+  }) begin
     `uvm_fatal(get_type_name(), "Failed to randomize.")
   end  
   
   finish_item(req);
-
+  //--------------------------------------------------
+  // or
+  //--------------------------------------------------
+//  `uvm_do_with(req, 
+//              {
+//               req.m_signal_value == local::m_signal_value;
+//              }
+//  )
+  //--------------------------------------------------
 endtask : body
 
 `endif // AXI_LITE_BASIC_SEQ_SV

@@ -13,11 +13,13 @@ import uvm_pkg::*;
 `include "axi_lite_driver.sv"
 `include "axi_lite_sequencer.sv"
 `include "axi_lite_monitor.sv"
+`include "axi_lite_cov.sv"
 `include "axi_lite_agent.sv"
 `include "axi_lite_env.sv"
-`include "axi_lite_if.sv"
-`include "axi_lite_basic_seq.sv"
+`include "axi_lite_seq_lib.sv"
 
 endpackage : axi_lite_pkg
+
+`include "axi_lite_if.sv"
 
 `endif // AXI_LITE_PKG_SV

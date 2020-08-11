@@ -1,15 +1,3 @@
-//------------------------------------------------------------------------------
-// Copyright (c) 2020 Elsys Eastern Europe
-// All rights reserved.
-//------------------------------------------------------------------------------
-// File name  : bram_b_monitor.sv
-// Developer  : Jelena Vujakovic
-// Date       : Aug 8, 2020
-// Description: 
-// Notes      : 
-//
-//------------------------------------------------------------------------------
-
 `ifndef BRAM_B_MONITOR_SV
 `define BRAM_B_MONITOR_SV
 
@@ -93,16 +81,16 @@ task bram_b_monitor::collect_item();
   
   forever begin    
     // wait signal change
-    @(posedge m_vif.clock iff m_vif.signal === 1);
+    @(posedge m_vif.clock iff m_vif.reset_n === 1);
     
     // begin transaction recording
     void'(begin_tr(m_item, "bram_b item"));
     
     // collect item
-    m_item.m_signal_value = m_vif.signal;
+    m_item.m_data_b_out = m_vif.data_b_out;
     
     // wait signal change
-    @(posedge m_vif.clock iff m_vif.signal === 0);
+    @(posedge m_vif.clock iff m_vif.web === 0);
     
     // end transaction recording
     end_tr(m_item);

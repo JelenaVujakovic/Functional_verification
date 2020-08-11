@@ -2,7 +2,7 @@
 // Copyright (c) 2020 Elsys Eastern Europe
 // All rights reserved.
 //------------------------------------------------------------------------------
-// File name  : bram_b_common.sv
+// File name  : axi_lite_seq_lib.sv
 // Developer  : Jelena Vujakovic
 // Date       : Aug 8, 2020
 // Description: 
@@ -10,12 +10,9 @@
 //
 //------------------------------------------------------------------------------
 
-`ifndef BRAM_B_COMMON_SV
-`define BRAM_B_COMMON_SV
+`ifndef AXI_LITE_SEQ_LIB_SV
+`define AXI_LITE_SEQ_LIB_SV
 
-typedef enum bit {
-  BRAM_B_LOW_E  = 0,
-  BRAM_B_HIGH_E = 1
-} bram_b_signal_value_e;
+`include "axi_lite_basic_seq.sv"
 
-`endif // BRAM_B_COMMON_SV
+`endif // AXI_LITE_SEQ_LIB_SV

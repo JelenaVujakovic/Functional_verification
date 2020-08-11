@@ -15,8 +15,8 @@ import axi_lite_pkg::*;
 import scrambler_ip_top_env_pkg::*;
 
 // include tests
-`include "scrambler_ip_base.sv"
-`include "scrambler_ip_example.sv"
+`include "test_scrambler_ip_base.sv"
+`include "test_scrambler_ip_example.sv"
 
 endpackage : scrambler_ip_test_pkg
 

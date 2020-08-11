@@ -1,28 +1,33 @@
+//------------------------------------------------------------------------------
+// Copyright (c) 2020 Elsys Eastern Europe
+// All rights reserved.
+//------------------------------------------------------------------------------
+// File name  : axi_lite_item.sv
+// Developer  : Jelena Vujakovic
+// Date       : Aug 8, 2020
+// Description: 
+// Notes      : 
+//
+//------------------------------------------------------------------------------
+
 `ifndef AXI_LITE_ITEM_SV
 `define AXI_LITE_ITEM_SV
 
 class axi_lite_item extends uvm_sequence_item;
   
-   // item fields
-  rand bit [3:0] addr;
-  rand bit [31:0] data;
-  rand bit write; //pomocni signal za write operaciju
-  rand bit read; //pomocni signal za read
-
-  //output
+  // item fields
+  rand bit m_signal_value;
+  
   // registration macro    
   `uvm_object_utils_begin(axi_lite_item)
-    `uvm_field_int(addr, UVM_ALL_ON)
-    `uvm_field_int(data, UVM_ALL_ON)
-    `uvm_field_int(read, UVM_ALL_ON)
-    `uvm_field_int(write, UVM_ALL_ON)
+    `uvm_field_int(m_signal_value, UVM_ALL_ON)
   `uvm_object_utils_end
-
-
-  constraint c_addr {
-      (addr == 0 || addr == 4 || addr == 8 );
+  
+  // constraints
+  constraint m_signal_value_c {
+    soft m_signal_value == 1;
   }
-
+  
   // constructor  
   extern function new(string name = "axi_lite_item");
   

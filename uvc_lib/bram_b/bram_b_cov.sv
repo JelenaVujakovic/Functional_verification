@@ -1,15 +1,3 @@
-//------------------------------------------------------------------------------
-// Copyright (c) 2020 Elsys Eastern Europe
-// All rights reserved.
-//------------------------------------------------------------------------------
-// File name  : bram_b_cov.sv
-// Developer  : Jelena Vujakovic
-// Date       : Aug 8, 2020
-// Description: 
-// Notes      : 
-//
-//------------------------------------------------------------------------------
-
 `ifndef BRAM_B_COV_SV
 `define BRAM_B_COV_SV
 
@@ -28,9 +16,9 @@ class bram_b_cov extends uvm_subscriber #(bram_b_item);
   covergroup bram_b_cg;
     option.per_instance = 1;
 
-    cp_signal_value : coverpoint m_signal_value_cov {
+    //cp_signal_value : coverpoint m_signal_value_cov {
       //option.weight = 0;
-    }
+    //}
   endgroup : bram_b_cg
   
   // constructor
@@ -48,7 +36,7 @@ endfunction : new
 
 // analysis implementation port function
 function void bram_b_cov::write(bram_b_item t);
-  m_signal_value_cov = t.m_signal_value;
+ // m_signal_value_cov = t.m_signal_value;
   bram_b_cg.sample();
 endfunction : write
 

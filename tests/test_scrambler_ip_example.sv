@@ -1,5 +1,5 @@
-`ifndef TEST_scrambler_IP_EXAMPLE_SV
-`define TEST_scrambler_IP_EXAMPLE_SV
+`ifndef TEST_SCRAMBLER_IP_EXAMPLE_SV
+`define TEST_SCRAMBLER_IP_EXAMPLE_SV
 
 // example test
 class test_scrambler_ip_example extends test_scrambler_ip_base;
@@ -49,4 +49,4 @@ function void test_scrambler_ip_example::set_default_configuration();
   // redefine configuration
 endfunction : set_default_configuration
 
-`endif // TEST_scrambler_IP_EXAMPLE_SV
+`endif 

@@ -6,6 +6,9 @@ interface axi_lite_if(input clock, input reset_n);
   `include "uvm_macros.svh"
   import uvm_pkg::*;
   
+  // signals
+  logic signal;
+
  //**************adresni kanal za upis**************
   logic [3:0] s_axi_awaddr;
   logic s_axi_awvalid;
@@ -29,7 +32,8 @@ interface axi_lite_if(input clock, input reset_n);
   logic s_axi_rvalid; //indikacija validnosti podatka
   logic s_axi_rready;
   logic [2:0] s_axi_awprot;
-
+  
+  
 endinterface : axi_lite_if
 
 `endif // AXI_LITE_IF_SV
