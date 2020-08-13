@@ -1,15 +1,3 @@
-//------------------------------------------------------------------------------
-// Copyright (c) 2020 Elsys Eastern Europe
-// All rights reserved.
-//------------------------------------------------------------------------------
-// File name  : axi_lite_agent.sv
-// Developer  : Jelena Vujakovic
-// Date       : Aug 8, 2020
-// Description: 
-// Notes      : 
-//
-//------------------------------------------------------------------------------
-
 `ifndef AXI_LITE_AGENT_SV
 `define AXI_LITE_AGENT_SV
 
@@ -31,7 +19,7 @@ class axi_lite_agent extends uvm_agent;
   axi_lite_driver m_driver;
   axi_lite_sequencer m_sequencer;
   axi_lite_monitor m_monitor;
-  axi_lite_cov m_cov;
+  //axi_lite_cov m_cov;
   
   // constructor
   extern function new(string name, uvm_component parent);
@@ -75,7 +63,7 @@ function void axi_lite_agent::build_phase(uvm_phase phase);
   end
   m_monitor = axi_lite_monitor::type_id::create("m_monitor", this);
   if (m_cfg.m_has_coverage == 1) begin
-    m_cov = axi_lite_cov::type_id::create("m_cov", this);
+   // m_cov = axi_lite_cov::type_id::create("m_cov", this);
   end  
 endfunction : build_phase
 
@@ -89,7 +77,7 @@ function void axi_lite_agent::connect_phase(uvm_phase phase);
   end
   m_monitor.m_aport.connect(m_aport);
   if (m_cfg.m_has_coverage == 1) begin
-    m_monitor.m_aport.connect(m_cov.analysis_export);
+   // m_monitor.m_aport.connect(m_cov.analysis_export);
   end
   
   // assign interface
@@ -105,7 +93,7 @@ function void axi_lite_agent::connect_phase(uvm_phase phase);
   end
   m_monitor.m_cfg = m_cfg;
   if (m_cfg.m_has_coverage == 1) begin
-    m_cov.m_cfg = m_cfg;
+   // m_cov.m_cfg = m_cfg;
   end
 endfunction : connect_phase
 

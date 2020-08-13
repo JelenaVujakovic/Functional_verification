@@ -7,7 +7,7 @@ interface bram_a_if(input clock, input reset_n);
   import uvm_pkg::*;
   logic signal;
   // signals
-  logic [31:0] dia;
+  logic [31:0] input_data;
   logic [31:0] addra;
   logic ena;
   logic wea;

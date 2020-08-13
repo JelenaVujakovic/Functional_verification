@@ -41,7 +41,7 @@ task bram_b_driver::run_phase(uvm_phase phase);
   super.run_phase(phase);
 
   // init signals
- // m_vif.signal <= 0;
+  m_vif.addrb <= 0;
   
   forever begin
     seq_item_port.get_next_item(m_req);

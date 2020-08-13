@@ -15,7 +15,7 @@ import bram_b_pkg::*;
 // include env files
 `include "scrambler_ip_top_cfg.sv"
 `include "scrambler_ip_virtual_sequencer.sv"
-`include "scrambler_ip_base_sequence.sv"
+`include "scrambler_ip_base_virtual.sv"
 `include "scrambler_ip_virtual_sequence.sv"
 `include "scrambler_ip_scoreboard.sv"
 `include "scrambler_ip_env_top.sv"

@@ -1,15 +1,3 @@
-//------------------------------------------------------------------------------
-// Copyright (c) 2020 Elsys Eastern Europe
-// All rights reserved.
-//------------------------------------------------------------------------------
-// File name  : bram_a_monitor.sv
-// Developer  : Jelena Vujakovic
-// Date       : Aug 8, 2020
-// Description: 
-// Notes      : 
-//
-//------------------------------------------------------------------------------
-
 `ifndef BRAM_A_MONITOR_SV
 `define BRAM_A_MONITOR_SV
 
@@ -91,24 +79,18 @@ task bram_a_monitor::collect_item();
   wait (m_vif.reset_n == 1);
   `uvm_info(get_type_name(), "Reset de-asserted. Starting to collect items...", UVM_HIGH)
   
-  forever begin    
-    // wait signal change
-    @(posedge m_vif.clock iff m_vif.signal === 1);
-    
-    // begin transaction recording
-    void'(begin_tr(m_item, "bram_a item"));
-    
-    // collect item
-    m_item.m_signal_value = m_vif.signal;
+  forever begin   
     
     // wait signal change
-    @(posedge m_vif.clock iff m_vif.signal === 0);
+    @(posedge m_vif.clock iff m_vif.ena === 1'b1);
+     m_item.m_addr_a_out = m_vif.addra; 
+     m_item.m_input_data = m_vif.input_data; 
+     m_item.m_ena = m_vif.ena;
     
-    // end transaction recording
-    end_tr(m_item);
-    
-    // print item
-    print_item(m_item);
+
+    // print_item(m_item);
+    //print item
+    `uvm_info(get_type_name(), $sformatf("Address of A is: \t%d, data is : \t%d", m_item.m_addr_a_out, m_vif.input_data), UVM_HIGH)
     
     // write analysis port
     m_aport.write(m_item);    

@@ -12,7 +12,6 @@ class scrambler_ip_virtual_sequencer extends uvm_sequencer;
 	
 	axi_lite_sequencer m_axi_lite_sequencer;
 	bram_a_sequencer m_bram_a_seq;
-	bram_b_sequencer m_bram_b_seq;
 	
 endclass : scrambler_ip_virtual_sequencer
 

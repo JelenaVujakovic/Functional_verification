@@ -54,7 +54,7 @@ module scrambler_ip_tb_top;
     .addra           (bram_a_if_inst.addra),
     .addrb           (bram_b_if_inst.addrb),
     .dina            (bram_a_if_inst.dina),
-    .douta           (bram_a_if_inst.dia),
+    .douta           (bram_a_if_inst.input_data),
     .dinb            (bram_b_if_inst.data_b_out),
     .doutb           (0),
     .wea             (bram_a_if_inst.wea),

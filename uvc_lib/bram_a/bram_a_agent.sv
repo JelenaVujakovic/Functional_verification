@@ -1,15 +1,3 @@
-//------------------------------------------------------------------------------
-// Copyright (c) 2020 Elsys Eastern Europe
-// All rights reserved.
-//------------------------------------------------------------------------------
-// File name  : bram_a_agent.sv
-// Developer  : Jelena Vujakovic
-// Date       : Aug 8, 2020
-// Description: 
-// Notes      : 
-//
-//------------------------------------------------------------------------------
-
 `ifndef BRAM_A_AGENT_SV
 `define BRAM_A_AGENT_SV
 

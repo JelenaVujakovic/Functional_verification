@@ -1,15 +1,3 @@
-//------------------------------------------------------------------------------
-// Copyright (c) 2020 Elsys Eastern Europe
-// All rights reserved.
-//------------------------------------------------------------------------------
-// File name  : bram_a_driver.sv
-// Developer  : Jelena Vujakovic
-// Date       : Aug 8, 2020
-// Description: 
-// Notes      : 
-//
-//------------------------------------------------------------------------------
-
 `ifndef BRAM_A_DRIVER_SV
 `define BRAM_A_DRIVER_SV
 
@@ -53,7 +41,7 @@ task bram_a_driver::run_phase(uvm_phase phase);
   super.run_phase(phase);
 
   // init signals
-  m_vif.signal <= 0;
+  m_vif.input_data <= 0;
   
   forever begin
     seq_item_port.get_next_item(m_req);
@@ -71,8 +59,19 @@ task bram_a_driver::process_item(bram_a_item item);
   wait (m_vif.reset_n == 1);
   
   // drive signals
-  @(posedge m_vif.clock);
-  m_vif.signal <= item.m_signal_value;
+  @(posedge m_vif.clock iff m_vif.reset_n == 1 );
+    for(int i = 0; i <= 8191; i++) begin
+        @(posedge m_vif.ena);
+        if(item.m_address > 32764) begin
+                `uvm_info(get_type_name(), $sformatf("Adress %d is out of block size. ",item.m_address),UVM_LOW)
+        end
+        else begin
+            m_vif.addra <= item.m_address; 
+            m_vif.input_data <= item.m_input_data;
+            `uvm_info(get_type_name(), $sformatf("Data is %d, adress is %d",m_vif.input_data,item.m_address),UVM_LOW)
+            item.m_address += 4;  
+        end              
+  end 
 endtask : process_item
 
 `endif // BRAM_A_DRIVER_SV
