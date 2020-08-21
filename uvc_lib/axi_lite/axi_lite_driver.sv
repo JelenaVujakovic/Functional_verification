@@ -46,6 +46,7 @@ task axi_lite_driver::run_phase(uvm_phase phase);
   super.run_phase(phase);
 
   // init signals
+  `uvm_info(get_type_name(), $sformatf("Driver AXI LITE initialization "),UVM_LOW)
   m_vif.s_axi_awaddr <= 'h0;
   m_vif.s_axi_awvalid <= 0;
   m_vif.s_axi_wdata <='h0;
@@ -56,7 +57,7 @@ task axi_lite_driver::run_phase(uvm_phase phase);
   m_vif.s_axi_rdata <= 'h0;
   m_vif.s_axi_rvalid <= 0;
   m_vif.s_axi_bready <= 0;
-  
+  `uvm_info(get_type_name(), $sformatf("Driver AXI LITE initialization addr=%d, input_data=%d ",m_vif.s_axi_awaddr , m_vif.s_axi_wdata),UVM_LOW)
   forever begin
     seq_item_port.get_next_item(m_req);
     process_item(m_req);
@@ -66,14 +67,14 @@ endtask : run_phase
 
 // process item
 task axi_lite_driver::process_item(axi_lite_item item);
-
+ `uvm_info(get_type_name(), $sformatf("Task AXI LITE after initialization addr=%d, input_data=%d ",m_vif.s_axi_awaddr , m_vif.s_axi_wdata),UVM_LOW)
  @(posedge m_vif.clock iff m_vif.reset_n==1);
  fork
   begin
-    fork
      write_trans(item);
+  end
+  begin
      read_trans(item);
-    join
   end
    @(negedge m_vif.reset_n);
  join_any
@@ -83,41 +84,35 @@ endtask : process_item
 
  task axi_lite_driver::write_trans(axi_lite_item item);
   
-  if(item.write!==1) begin
-   return;
-  end
-  else begin
-   m_vif.s_axi_awvalid = 1;
-   m_vif.s_axi_awaddr = item.addr;
-   m_vif.s_axi_wvalid = 1;
-   m_vif.s_axi_wstrb = 4'b1111;
-   m_vif.s_axi_wdata = item.data;
-   m_vif.s_axi_bready = 1;
-   @(posedge m_vif.clock iff m_vif.s_axi_awready==1);
-   `uvm_info(get_type_name(), $sformatf("Item to be driven: \n%s", item.sprint()), UVM_HIGH)
-   @(posedge m_vif.clock iff m_vif.s_axi_awready==0);
-   m_vif.s_axi_awvalid = 0;
-   m_vif.s_axi_awaddr = 4'b0;
-   m_vif.s_axi_wvalid = 0;
-   m_vif.s_axi_wstrb = 4'b0000;
-   m_vif.s_axi_wdata = 'h0;
-   @(posedge m_vif.clock iff m_vif.s_axi_bvalid == 0);
-   m_vif.s_axi_bready = 0;
+  if(item.rw_op == write) begin
+      m_vif.s_axi_awvalid = 1;
+      m_vif.s_axi_awaddr = item.addr;
+      m_vif.s_axi_wvalid = 1;
+      m_vif.s_axi_wstrb = 4'b1111;
+      m_vif.s_axi_wdata = item.data;
+      m_vif.s_axi_bready = 1;
+      @(posedge m_vif.clock iff m_vif.s_axi_awready==1);
+      `uvm_info(get_type_name(), $sformatf("Item to be driven: \n%s", item.sprint()), UVM_HIGH)
+      @(posedge m_vif.clock iff m_vif.s_axi_awready==0);
+      m_vif.s_axi_awvalid = 0;
+      m_vif.s_axi_awaddr = 4'b0;
+      m_vif.s_axi_wvalid = 0;
+      m_vif.s_axi_wstrb = 4'b0000;
+      m_vif.s_axi_wdata = 'h0;
+      @(posedge m_vif.clock iff m_vif.s_axi_bvalid == 0);
+      m_vif.s_axi_bready = 0;
   end
  endtask: write_trans
 
 
  task axi_lite_driver::read_trans(axi_lite_item item);
-  if(item.read!==1) begin
-    return;
-  end
-  else begin
-   m_vif.s_axi_arvalid = 1;
-   m_vif.s_axi_araddr = item.addr;
-  @(posedge m_vif.clock iff m_vif.s_axi_arready==1);
-  @(posedge m_vif.clock iff m_vif.s_axi_arready==0);
-  m_vif.s_axi_arvalid = 0;
-   `uvm_info(get_type_name(), $sformatf("Item to be driven: \n%s", item.sprint()), UVM_HIGH)
+  if(item.rw_op == read) begin
+      m_vif.s_axi_arvalid = 1;
+      m_vif.s_axi_araddr = item.addr;
+      @(posedge m_vif.clock iff m_vif.s_axi_arready==1);
+      @(posedge m_vif.clock iff m_vif.s_axi_arready==0);
+      m_vif.s_axi_arvalid = 0;
+      `uvm_info(get_type_name(), $sformatf("Item to be driven: \n%s", item.sprint()), UVM_HIGH)
   end
 
  endtask: read_trans

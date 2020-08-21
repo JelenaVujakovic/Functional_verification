@@ -41,6 +41,7 @@ task bram_b_driver::run_phase(uvm_phase phase);
   super.run_phase(phase);
 
   // init signals
+  `uvm_info(get_type_name(), $sformatf("Driver BRAM B initialization "),UVM_LOW)
   m_vif.addrb <= 0;
   
   forever begin

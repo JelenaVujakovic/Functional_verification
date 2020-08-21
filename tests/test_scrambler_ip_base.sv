@@ -73,13 +73,13 @@ function void test_scrambler_ip_base::set_default_configuration();
     m_cfg.m_axi_lite_cfg.m_agent_cfg.m_has_checks = 1;
     m_cfg.m_axi_lite_cfg.m_agent_cfg.m_has_coverage = 1;
     
-    //MATRIX A Configuration
+    //BRAM A Configuration
     m_cfg.m_bram_a_cfg.m_agent_cfg.m_is_active = UVM_ACTIVE;
     m_cfg.m_bram_a_cfg.m_agent_cfg.m_has_checks = 1;
     m_cfg.m_bram_a_cfg.m_agent_cfg.m_has_coverage = 1;
     
-    //MATRIX B Configuration
-    m_cfg.m_bram_b_cfg.m_agent_cfg.m_is_active = UVM_ACTIVE;
+    //BRAM B Configuration, BRAM B agent passive
+    m_cfg.m_bram_b_cfg.m_agent_cfg.m_is_active = UVM_PASSIVE;
     m_cfg.m_bram_b_cfg.m_agent_cfg.m_has_checks = 1;
     m_cfg.m_bram_b_cfg.m_agent_cfg.m_has_coverage = 1;
     

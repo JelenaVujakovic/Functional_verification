@@ -13,57 +13,50 @@ function new (string name = "scrambler_ip_virtual_sequence");
 endfunction
 
 	bram_a_basic_seq m_a_seq;
-	axi_lite_write_seq m_axi_lite_seq;
+	axi_lite_write_start_register_value_seq m_axi_lite_write_start_register_value_seq;
+    axi_lite_read_ready_register_seq m_axi_lite_read_ready_register_seq;
 	
 task pre_body();
 	super.pre_body();
 	
 	m_a_seq = bram_a_basic_seq::type_id::create ("m_a_seq");
-	m_axi_lite_seq = axi_lite_write_seq::type_id::create ("m_axi_lite_seq");
-
+	m_axi_lite_write_start_register_value_seq = axi_lite_write_start_register_value_seq::type_id::create ("m_axi_lite_write_start_register_value_seq");
+    m_axi_lite_read_ready_register_seq = axi_lite_read_ready_register_seq::type_id::create ("m_axi_lite_read_ready_register_seq");
 	
 endtask: pre_body
 
 task body();
 	
-
-  /*if(!m_axi_lite_read_seq.randomize() with {addr == READY_REG_ADDR;}) begin //citanje ready registra
+  //Read value from READY register
+  if(!m_axi_lite_read_ready_register_seq.randomize()) begin 
 	   `uvm_fatal(get_type_name(), "Failed to randomize.")
   end
-        //m_axi_lite_read_seq.start(p_sequencer.m_axi_lite_sequencer);
-
-  if(!m_axi_lite_seq.randomize() with {addr == START_REG_ADDR; data == 'h1;}) begin //start
-	   `uvm_fatal(get_type_name(), "Failed to randomize.")
-    end
-	  m_axi_lite_seq.start(p_sequencer.m_axi_lite_sequencer);
+        m_axi_lite_read_ready_register_seq.start(p_sequencer.m_axi_lite_sequencer);
   
-  fork 
-   begin
-    
-    #1us;
-    if(!m_axi_lite_seq.randomize() with {addr == START_REG_ADDR; data =='h0;}) begin //obrisi start registar
+  //Set value of START register
+  if(!m_axi_lite_write_start_register_value_seq.randomize() with { data =='h1;} ) begin 
 	   `uvm_fatal(get_type_name(), "Failed to randomize.")
     end
-	  m_axi_lite_seq.start(p_sequencer.m_axi_lite_sequencer);
-    #50us;
+	  m_axi_lite_write_start_register_value_seq.start(p_sequencer.m_axi_lite_sequencer);
+  fork 
+   begin 
+        #1us;
+        //Reset START REGISTER value to '0'
+        if(!m_axi_lite_write_start_register_value_seq.randomize() with { data =='h0;}) begin 
+	       `uvm_fatal(get_type_name(), "Failed to randomize.")
+        end
+	      m_axi_lite_write_start_register_value_seq.start(p_sequencer.m_axi_lite_sequencer);
+        #50us;
    end
-   begin
-      if(!m_a_seq.randomize() with { m_data_a== data;})
-         begin
-				 `uvm_fatal(get_type_name(), "Failed to randomize.")
-	     end
-       `uvm_info(get_type_name(), $sformatf("Size is %d, queue is : %p.",data),UVM_LOW)
-		    m_a_seq.start(p_sequencer.m_bram_a_seq);
+   begin 
+        for(int i = 0; i < BLOCK_SIZE; i++) begin
+                 if(!m_a_seq.randomize() with {m_input_data == data;}) begin
+		            `uvm_fatal(get_type_name(), "Failed to randomize.")
+		         end
+			         m_a_seq.start(p_sequencer.m_bram_a_seq);
+        end
    end
-   /*begin 
-       repeat( 8192) begin
-				  if(!m_b_seq.randomize() with {m_type_of_kernel == kernel_type;}) begin
-				    `uvm_fatal(get_type_name(), "Failed to randomize.")
-				  end
-				  m_b_seq.start(p_sequencer.m_bram_b_seq);
-     end*/
-   //end
- //join
+ join
 
 endtask: body
 endclass

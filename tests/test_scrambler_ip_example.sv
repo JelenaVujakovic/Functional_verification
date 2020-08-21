@@ -7,8 +7,8 @@ class test_scrambler_ip_example extends test_scrambler_ip_base;
   // registration macro
   `uvm_component_utils(test_scrambler_ip_example)
   
- scrambler_ip_base_virtual m_vir_seq;
- axi_lite_basic_seq axi_lite_seq;
+  scrambler_ip_base_virtual m_vir_seq;
+  axi_lite_basic_seq axi_lite_seq;
 
   // constructor
   extern function new(string name, uvm_component parent);
@@ -36,7 +36,7 @@ task test_scrambler_ip_example::run_phase(uvm_phase phase);
 
   assert(m_vir_seq.randomize());
   m_vir_seq.start(m_scrambler_ip_env_top.m_virt_seqr);
-  #1200ns;
+  #200ns;
      
   uvm_test_done.drop_objection(this, get_type_name());    
   `uvm_info(get_type_name(), "TEST FINISHED", UVM_LOW)

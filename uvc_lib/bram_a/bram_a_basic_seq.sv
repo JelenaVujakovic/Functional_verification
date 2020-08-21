@@ -12,6 +12,7 @@ class bram_a_basic_seq extends uvm_sequence #(bram_a_item);
   // fields
   rand bit [31:0] m_input_data;
   bit [31:0] m_address;
+
   //constaints
   constraint m_address_c {
     m_address % 4 == 0;

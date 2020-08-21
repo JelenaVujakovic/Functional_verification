@@ -41,8 +41,10 @@ task bram_a_driver::run_phase(uvm_phase phase);
   super.run_phase(phase);
 
   // init signals
+  m_vif.addra <= 0;
   m_vif.input_data <= 0;
-  
+  `uvm_info(get_type_name(), $sformatf("Driver BRAM A initialization addr=%d, input_data=%d ",m_vif.addra, m_vif.input_data),UVM_LOW)
+
   forever begin
     seq_item_port.get_next_item(m_req);
     process_item(m_req);
@@ -60,18 +62,16 @@ task bram_a_driver::process_item(bram_a_item item);
   
   // drive signals
   @(posedge m_vif.clock iff m_vif.reset_n == 1 );
-    for(int i = 0; i <= 8191; i++) begin
-        @(posedge m_vif.ena);
-        if(item.m_address > 32764) begin
-                `uvm_info(get_type_name(), $sformatf("Adress %d is out of block size. ",item.m_address),UVM_LOW)
-        end
-        else begin
-            m_vif.addra <= item.m_address; 
-            m_vif.input_data <= item.m_input_data;
-            `uvm_info(get_type_name(), $sformatf("Data is %d, adress is %d",m_vif.input_data,item.m_address),UVM_LOW)
-            item.m_address += 4;  
-        end              
-  end 
+  @(posedge m_vif.ena);
+    if(m_vif.addra > 8192) begin
+        `uvm_info(get_type_name(), $sformatf("Adress %d is out of block size. ",m_vif.addra),UVM_LOW)
+    end
+    else begin
+        item.m_address = (m_vif.addra/4); 
+        m_vif.input_data <= item.m_input_data;
+        `uvm_info(get_type_name(), $sformatf("Data is %d, adress is %d",m_vif.input_data,item.m_address),UVM_LOW)  
+    end              
+
 endtask : process_item
 
 `endif // BRAM_A_DRIVER_SV

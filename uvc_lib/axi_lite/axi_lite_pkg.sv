@@ -6,6 +6,7 @@ package axi_lite_pkg;
 `include "uvm_macros.svh"
 import uvm_pkg::*;
 
+`include "axi_lite_common.sv"
 `include "axi_lite_agent_cfg.sv"
 `include "axi_lite_cfg.sv"
 `include "axi_lite_item.sv"

@@ -15,12 +15,9 @@ class axi_lite_basic_seq extends uvm_sequence #(axi_lite_item);
   // body task
   extern virtual task body();
   
-   constraint c_data {
-       data < 256; data >= 0; 
-  }
   
    constraint c_addr {
-      (addr == 0 || addr == 4 || addr == 8 || addr == 12);
+      (addr == 4 || addr == 8 );
   }
 
 endclass : axi_lite_basic_seq
