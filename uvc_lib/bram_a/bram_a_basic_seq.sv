@@ -11,12 +11,9 @@ class bram_a_basic_seq extends uvm_sequence #(bram_a_item);
   
   // fields
   rand bit [31:0] m_input_data;
-  bit [31:0] m_address;
-
+  
   //constaints
-  constraint m_address_c {
-    m_address % 4 == 0;
-  }
+ 
   // constructor
   extern function new(string name = "bram_a_basic_seq");
   // body task
@@ -36,12 +33,7 @@ task bram_a_basic_seq::body();
   
   start_item(req);
   
-  if(!req.randomize() with {
-                             
-                             m_input_data == m_input_data;
-                             m_address == m_address; 
-                             
-                            }) 
+  if(!req.randomize() with {m_input_data == m_input_data;}) 
   begin
     `uvm_fatal(get_type_name(), "Failed to randomize.")
   end  
