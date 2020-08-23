@@ -32,6 +32,7 @@ task bram_a_basic_seq::body();
   req = bram_a_item::type_id::create("req");
   
   start_item(req);
+  `uvm_info(get_type_name(), " --- BRAM A basic sequence--- ", UVM_LOW)
   
   if(!req.randomize() with {m_input_data == m_input_data;}) 
   begin

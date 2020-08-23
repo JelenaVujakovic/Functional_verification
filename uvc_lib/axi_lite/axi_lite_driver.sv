@@ -47,16 +47,16 @@ task axi_lite_driver::run_phase(uvm_phase phase);
 
   // init signals
   `uvm_info(get_type_name(), $sformatf("Driver AXI LITE initialization "),UVM_LOW)
-  m_vif.s_axi_awaddr <= 'h0;
-  m_vif.s_axi_awvalid <= 0;
-  m_vif.s_axi_wdata <='h0;
-  m_vif.s_axi_wstrb <='h0;
-  m_vif.s_axi_wvalid <= 0;
-  m_vif.s_axi_araddr <= 'h0;
-  m_vif.s_axi_arvalid <= 0;
-  m_vif.s_axi_rdata <= 'h0;
-  m_vif.s_axi_rvalid <= 0;
-  m_vif.s_axi_bready <= 0;
+  m_vif.s_axi_awaddr = 'h0;
+  m_vif.s_axi_awvalid = 0;
+  m_vif.s_axi_wdata ='h0;
+  m_vif.s_axi_wstrb ='h0;
+  m_vif.s_axi_wvalid = 0;
+  m_vif.s_axi_araddr = 'h0;
+  m_vif.s_axi_arvalid = 0;
+  m_vif.s_axi_rdata = 'h0;
+  m_vif.s_axi_rvalid = 0;
+  m_vif.s_axi_bready = 0;
   `uvm_info(get_type_name(), $sformatf("Driver AXI LITE initialization addr=%d, input_data=%d ",m_vif.s_axi_awaddr , m_vif.s_axi_wdata),UVM_LOW)
   forever begin
     seq_item_port.get_next_item(m_req);

@@ -31,12 +31,14 @@ task body();
   if(!m_axi_lite_read_ready_register_seq.randomize()) begin 
 	   `uvm_fatal(get_type_name(), "Failed to randomize.")
   end
+        `uvm_info(get_type_name(), " --- AXI read ready register sequence--- ", UVM_LOW)
         m_axi_lite_read_ready_register_seq.start(p_sequencer.m_axi_lite_sequencer);
   
   //Set value of START register
   if(!m_axi_lite_write_start_register_value_seq.randomize() with { data =='h1;} ) begin 
 	   `uvm_fatal(get_type_name(), "Failed to randomize.")
     end
+       `uvm_info(get_type_name(), " --- AXI write '1' to start register sequence--- ", UVM_LOW)
 	  m_axi_lite_write_start_register_value_seq.start(p_sequencer.m_axi_lite_sequencer);
   fork 
    begin 
@@ -45,6 +47,7 @@ task body();
         if(!m_axi_lite_write_start_register_value_seq.randomize() with { data =='h0;}) begin 
 	       `uvm_fatal(get_type_name(), "Failed to randomize.")
         end
+          `uvm_info(get_type_name(), " --- AXI write '0' to start register sequence--- ", UVM_LOW)
 	      m_axi_lite_write_start_register_value_seq.start(p_sequencer.m_axi_lite_sequencer);
         #50us;
    end
@@ -53,6 +56,7 @@ task body();
                  if(!m_a_seq.randomize() with {m_input_data == data;}) begin
 		            `uvm_fatal(get_type_name(), "Failed to randomize.")
 		         end
+                     `uvm_info(get_type_name(), " --- BRAM A sequence--- ", UVM_LOW)
 			         m_a_seq.start(p_sequencer.m_bram_a_seq);
         end
    end
