@@ -5,7 +5,7 @@ interface bram_a_if(input clock, input reset_n);
   
   `include "uvm_macros.svh"
   import uvm_pkg::*;
-  logic signal;
+  
   // signals
   logic [31:0] input_data;
   logic [31:0] addra;

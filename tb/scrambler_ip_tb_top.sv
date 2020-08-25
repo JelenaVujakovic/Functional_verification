@@ -73,7 +73,7 @@ module scrambler_ip_tb_top;
   initial begin : clock_and_rst_init_block
     reset_n <= 1'b0;
     clock <= 1'b1;
-    #501 reset_n <= 1'b1;
+    #50 reset_n <= 1'b1;
   end
   
   // generate clock

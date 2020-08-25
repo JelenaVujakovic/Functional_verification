@@ -10,5 +10,4 @@ function new (string name = "scrambler_ip_base_virtual");
 	super.new(name);
 endfunction
 endclass
-
 `endif 

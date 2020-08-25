@@ -7,7 +7,6 @@ interface axi_lite_if(input clock, input reset_n);
   import uvm_pkg::*;
   
   // signals
-  logic signal;
 
  //**************adresni kanal za upis**************
   logic [3:0] s_axi_awaddr;
