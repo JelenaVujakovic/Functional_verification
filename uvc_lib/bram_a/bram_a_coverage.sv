@@ -25,13 +25,13 @@ class bram_a_coverage extends uvm_subscriber #(bram_a_item);
         bins high = { [1001:1499] };
     }
     //Cover different address range
-    /*bram_a_address: coverpoint bram_a_clone_item.m_address {
+    bram_a_address: coverpoint bram_a_clone_item.m_address {
         bins low_addr_range = { [0:10921] };
         bins med_addr_range = { [10922:21842] };
         bins high_addr_range = { [21843:32764] };
     }
     cross_bram_a_addr_and_data: cross bram_a_clone_item.m_address,bram_a_clone_item.m_input_data;
-    */
+    
   endgroup : bram_a_cg
   
   // constructor
