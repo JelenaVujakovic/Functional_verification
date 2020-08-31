@@ -19,8 +19,6 @@ import bram_b_pkg::*;
 `include "scrambler_ip_virtual_sequence.sv"
 `include "scrambler_ip_scoreboard.sv"
 `include "scrambler_ip_env_top.sv"
-`include "scrambler_ip_cov_collector.sv"
 
 endpackage : scrambler_ip_top_env_pkg
-
 `endif 

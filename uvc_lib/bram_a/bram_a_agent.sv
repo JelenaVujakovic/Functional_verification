@@ -19,7 +19,7 @@ class bram_a_agent extends uvm_agent;
   bram_a_driver m_driver;
   bram_a_sequencer m_sequencer;
   bram_a_monitor m_monitor;
-  bram_a_cov m_cov;
+  bram_a_coverage m_coverage;
   
   // constructor
   extern function new(string name, uvm_component parent);
@@ -63,7 +63,7 @@ function void bram_a_agent::build_phase(uvm_phase phase);
   end
   m_monitor = bram_a_monitor::type_id::create("m_monitor", this);
   if (m_cfg.m_has_coverage == 1) begin
-    m_cov = bram_a_cov::type_id::create("m_cov", this);
+    m_coverage = bram_a_coverage::type_id::create("m_coverage", this);
   end  
 endfunction : build_phase
 
@@ -77,7 +77,7 @@ function void bram_a_agent::connect_phase(uvm_phase phase);
   end
   m_monitor.m_aport.connect(m_aport);
   if (m_cfg.m_has_coverage == 1) begin
-    m_monitor.m_aport.connect(m_cov.analysis_export);
+    m_monitor.m_aport.connect(m_coverage.analysis_export);
   end
   
   // assign interface
@@ -93,7 +93,7 @@ function void bram_a_agent::connect_phase(uvm_phase phase);
   end
   m_monitor.m_cfg = m_cfg;
   if (m_cfg.m_has_coverage == 1) begin
-    m_cov.m_cfg = m_cfg;
+    m_coverage.m_cfg = m_cfg;
   end
 endfunction : connect_phase
 

@@ -36,8 +36,7 @@ task test_scrambler_ip_example::run_phase(uvm_phase phase);
 
   assert(m_vir_seq.randomize());
   m_vir_seq.start(m_scrambler_ip_env_top.m_virt_seqr);
-  #10000ns;
-     
+  #100ns;
   uvm_test_done.drop_objection(this, get_type_name());    
   `uvm_info(get_type_name(), "TEST FINISHED", UVM_LOW)
 endtask : run_phase

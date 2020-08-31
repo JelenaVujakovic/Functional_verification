@@ -62,7 +62,7 @@ task bram_a_driver::process_item(bram_a_item item);
   // drive signals
   @(posedge m_vif.clock iff m_vif.reset_n == 1 );
   @(posedge m_vif.ena);
-    if(m_vif.addra > 8192) begin
+    if(m_vif.addra > 32764) begin
         `uvm_info(get_type_name(), $sformatf("Adress %d is out of block size. ",m_vif.addra),UVM_LOW)
     end
     else begin

@@ -12,7 +12,7 @@ import uvm_pkg::*;
 `include "bram_a_driver.sv"
 `include "bram_a_sequencer.sv"
 `include "bram_a_monitor.sv"
-`include "bram_a_cov.sv"
+`include "bram_a_coverage.sv"
 `include "bram_a_agent.sv"
 `include "bram_a_env.sv"
 `include "bram_a_seq_lib.sv"

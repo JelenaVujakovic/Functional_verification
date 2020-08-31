@@ -84,7 +84,6 @@ function void test_scrambler_ip_base::set_default_configuration();
     m_cfg.m_bram_b_cfg.m_agent_cfg.m_has_coverage = 1;
     
 
-  
     
 endfunction : set_default_configuration
 
