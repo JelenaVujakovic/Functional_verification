@@ -83,14 +83,14 @@ task bram_a_monitor::collect_item();
     
     // wait signal change
     @(posedge m_vif.clock iff m_vif.ena === 1'b1);
-     m_item.m_address = m_vif.addra; 
+     m_item.m_addr_a_out = m_vif.addra; 
      m_item.m_input_data = m_vif.input_data; 
      m_item.m_ena = m_vif.ena;
     
 
-     print_item(m_item);
+    // print_item(m_item);
     //print item
-    `uvm_info(get_type_name(), $sformatf("Address of A is: \t%d, data is : \t%d", m_item.m_address, m_vif.input_data), UVM_HIGH)
+    `uvm_info(get_type_name(), $sformatf("Address of A is: \t%d, data is : \t%d", m_item.m_addr_a_out, m_vif.input_data), UVM_HIGH)
     
     // write analysis port
     m_aport.write(m_item);    

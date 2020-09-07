@@ -17,7 +17,7 @@ class axi_lite_basic_seq extends uvm_sequence #(axi_lite_item);
   
   
    constraint c_addr {
-      (addr == 4 || addr == 8 );
+      (addr == 0 || addr == 4 || addr == 8 );
   }
 
 endclass : axi_lite_basic_seq

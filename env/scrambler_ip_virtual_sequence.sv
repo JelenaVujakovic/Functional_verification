@@ -15,6 +15,7 @@ endfunction
 	bram_a_basic_seq m_a_seq;
 	axi_lite_write_start_register_value_seq m_axi_lite_write_start_register_value_seq;
     axi_lite_read_ready_register_seq m_axi_lite_read_ready_register_seq;
+	axi_lite_write_reset_register_seq m_axi_lite_write_reset_register_seq;
 	
 task pre_body();
 	super.pre_body();
@@ -22,11 +23,26 @@ task pre_body();
 	m_a_seq = bram_a_basic_seq::type_id::create ("m_a_seq");
 	m_axi_lite_write_start_register_value_seq = axi_lite_write_start_register_value_seq::type_id::create ("m_axi_lite_write_start_register_value_seq");
     m_axi_lite_read_ready_register_seq = axi_lite_read_ready_register_seq::type_id::create ("m_axi_lite_read_ready_register_seq");
-	
+	m_axi_lite_write_reset_register_seq = axi_lite_write_reset_register_seq::type_id::create ("m_axi_lite_write_reset_register_seq");
 endtask: pre_body
 
 task body();
-	
+   //Set value of RESET register to '0'
+  /*if(!m_axi_lite_write_reset_register_seq.randomize() with { data =='h0;} ) begin 
+	   `uvm_fatal(get_type_name(), "Failed to randomize.")
+    end
+       `uvm_info(get_type_name(), " AXI write '0'to reset register sequence ", UVM_LOW)
+	   m_axi_lite_write_reset_register_seq.start(p_sequencer.m_axi_lite_sequencer);  
+    #50us;
+    //Set value of RESET register to '1'
+   if(!m_axi_lite_write_reset_register_seq.randomize() with { data =='h1;} ) begin 
+	   `uvm_fatal(get_type_name(), "Failed to randomize.")
+    end
+       `uvm_info(get_type_name(), " AXI write '0'to reset register sequence ", UVM_LOW)
+	   m_axi_lite_write_reset_register_seq.start(p_sequencer.m_axi_lite_sequencer);  
+
+    #50us;
+   */
   //Read value from READY register
   if(!m_axi_lite_read_ready_register_seq.randomize()) begin 
 	   `uvm_fatal(get_type_name(), "Failed to randomize.")
@@ -61,7 +77,6 @@ task body();
         end
    end
  join
-
 endtask: body
 endclass
 
