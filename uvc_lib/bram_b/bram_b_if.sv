@@ -8,7 +8,7 @@ interface bram_b_if(input clock, input reset_n);
   
   // signals
   logic [31:0] data_b_out;
-  logic [31:0] addrb;
+  logic [14:0] addrb;
   logic enb;
   logic web;
   

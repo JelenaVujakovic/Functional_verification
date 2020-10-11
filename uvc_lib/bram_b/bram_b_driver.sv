@@ -40,9 +40,9 @@ endfunction : build_phase
 task bram_b_driver::run_phase(uvm_phase phase);
   super.run_phase(phase);
 
-  // init signals
-  `uvm_info(get_type_name(), $sformatf("Driver BRAM B initialization "),UVM_LOW)
-  m_vif.addrb <= 0;
+ // init signals
+  m_vif.addrb<= 0;
+  m_vif.data_b_out <= 0;
   
   forever begin
     seq_item_port.get_next_item(m_req);
@@ -60,8 +60,9 @@ task bram_b_driver::process_item(bram_b_item item);
   wait (m_vif.reset_n == 1);
   
   // drive signals
-  @(posedge m_vif.clock);
- // m_vif.signal <= item.m_signal_value;
+ // @(posedge m_vif.clock iff m_vif.enable_b=== 1'b1);
+  //  m_vif.addr_b<= item.m_addr_c;
+    
 endtask : process_item
 
-`endif // BRAM_B_DRIVER_SV
+`endif

@@ -18,7 +18,7 @@ class axi_lite_item extends uvm_sequence_item;
 
   // constraints
   constraint c_addr {
-      (addr == 0 || addr == 4 || addr == 8);
+      (addr == 4 || addr == 8);
   }
 
   // constructor  

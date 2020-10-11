@@ -19,7 +19,6 @@ class axi_lite_coverage extends uvm_subscriber #(axi_lite_item);
     
     //Cover register address access
     axi_lite_register_address : coverpoint axi_lite_clone.addr{
-        bins RESET_REGISTER = {'h0};
         bins START_REGISTER = {'h4};
         bins READY_REGISTER = {'h8};
     }
@@ -43,14 +42,6 @@ class axi_lite_coverage extends uvm_subscriber #(axi_lite_item);
     cross_axi_lite_read_op_and_ready_reg_addr: cross axi_lite_register_address,axi_lite_read_write{
         bins ready_register_read = binsof(addr) intersect {'h8} && binsof(rw) intersect {0};
     }
-     //Cover read operation on RESET REGISTER address,RESET REGISTER read-only
-    cross_axi_lite_reset_op_and_reset_reg_addr: cross axi_lite_register_address,axi_lite_read_write{
-        bins reset_register_read = binsof(addr) intersect {'h0} && binsof(rw) intersect {0};
-    }
-    //Cover reset register value
-    cross_axi_lite_data_value_and_reset_reg_addr: cross axi_lite_register_address,axi_lite_data{
-        bins reset_register_read = binsof(addr.RESET_REGISTER) && binsof(data);
-    }
     //Cover ready register value
     cross_axi_lite_data_value_and_ready_reg_addr: cross axi_lite_register_address,axi_lite_data{
         bins ready_register_read = binsof(addr.READY_REGISTER) && binsof(data);
@@ -59,11 +50,11 @@ class axi_lite_coverage extends uvm_subscriber #(axi_lite_item);
     cross_axi_lite_data_value_and_start_reg_addr: cross axi_lite_register_address,axi_lite_data{
         bins start_register_read = binsof(addr.START_REGISTER) && binsof(data);
     }
-    //Cover RESET_REGISTER = 1 && READY_REGISTER = '1' -> START_REGISTER = '0'
+    //Cover READY_REGISTER = '1' -> START_REGISTER = '0'
     cross_check_register_value: cross axi_lite_register_address,axi_lite_data{
-        bins reset_register_value = binsof(addr.RESET_REGISTER) && binsof(data) intersect {1}; 
         bins ready_register_value = binsof(addr.READY_REGISTER) && binsof(data) intersect {1};        
-        bins start_register_value = binsof(addr.START_REGISTER) && binsof(data) intersect {0};     
+        bins start_register_value = binsof(addr.START_REGISTER) && binsof(data) intersect {0};
+        
     }
     
        

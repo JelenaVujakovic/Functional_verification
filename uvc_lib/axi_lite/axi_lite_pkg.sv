@@ -15,7 +15,7 @@ import uvm_pkg::*;
 `include "axi_lite_monitor.sv"
 `include "axi_lite_agent.sv"
 `include "axi_lite_env.sv"
-`include "sequences/axi_lite_seq_lib.sv"
+`include "axi_lite_seq_lib.sv"
 `include "axi_lite_coverage.sv"
 
 endpackage : axi_lite_pkg

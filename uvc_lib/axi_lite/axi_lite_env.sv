@@ -41,6 +41,3 @@ function void axi_lite_env::build_phase(uvm_phase phase);
 endfunction : build_phase
 
 `endif // AXI_LITE_ENV_SV
-
-//-testplusarg UVM_TESTNAME=test_scrambler_ip_example -testplusarg UVM_VERBOSITY=UVM_LOW
-//10000000ns

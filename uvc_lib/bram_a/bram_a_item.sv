@@ -8,14 +8,12 @@ class bram_a_item extends uvm_sequence_item;
   bit [31:0] m_address;
 
   //output
-  bit [31:0] m_addr_a_out;
   bit m_ena;
   
   // registration macro    
   `uvm_object_utils_begin(bram_a_item)
     `uvm_field_int(m_input_data, UVM_ALL_ON)
     `uvm_field_int(m_address, UVM_ALL_ON)
-    `uvm_field_int(m_addr_a_out, UVM_ALL_ON)
     `uvm_field_int(m_ena, UVM_ALL_ON)
   `uvm_object_utils_end
   
@@ -23,7 +21,9 @@ class bram_a_item extends uvm_sequence_item;
   constraint m_address_c {
     m_address % 4 == 0;
   }
-  
+  constraint m_input_data_c {
+    m_input_data < 1500; 
+  }
   // constructor  
   extern function new(string name = "bram_a_item");
   
