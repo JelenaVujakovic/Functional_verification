@@ -52,7 +52,7 @@ function void scrambler_ip_scoreboard::build_phase(uvm_phase phase);
 	super.build_phase(phase);
 	m_axi_lite = new("m_axi_lite",this);
 	m_bram_a = new("m_bram_a",this);
-    m_bram_b = new("m_bram_b",this);
+        m_bram_b = new("m_bram_b",this);
 	
 
    // get configuration
