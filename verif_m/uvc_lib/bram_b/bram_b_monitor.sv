@@ -89,6 +89,7 @@ task bram_b_monitor::collect_item();
     // collect item
     m_item.m_data_b_out = m_vif.data_b_out;
     m_item.m_addr_b_out = m_vif.addrb;
+    m_item.m_wr_en = m_vif.web;
     // wait signal change
     @(posedge m_vif.clock iff m_vif.web === 0);
     

@@ -6,11 +6,13 @@ class bram_b_item extends uvm_sequence_item;
   // item fields
   rand bit [31:0] m_data_b_out;
   rand bit [31:0] m_addr_b_out;
+  rand bit m_wr_en;
   
   // registration macro    
   `uvm_object_utils_begin(bram_b_item)
     `uvm_field_int(m_data_b_out, UVM_ALL_ON)
     `uvm_field_int(m_addr_b_out, UVM_ALL_ON)
+    `uvm_field_int(m_wr_en, UVM_ALL_ON)
   `uvm_object_utils_end
   
   // constraints
