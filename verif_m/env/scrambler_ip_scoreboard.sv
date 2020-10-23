@@ -7,9 +7,9 @@
 
 
 class scrambler_ip_scoreboard extends uvm_scoreboard;
-	`uvm_component_utils(scrambler_ip_scoreboard)
+  `uvm_component_utils(scrambler_ip_scoreboard)
 
-   scrambler_ip_top_cfg m_cfg;
+  scrambler_ip_top_cfg m_cfg;
   //clone items
   axi_lite_item axi_clone_item;
   bram_a_item bram_a_clone;
