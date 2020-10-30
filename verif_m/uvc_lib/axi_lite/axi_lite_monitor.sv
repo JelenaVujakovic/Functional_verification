@@ -70,7 +70,7 @@ endtask : run_phase
 task axi_lite_monitor::handle_reset();
   // wait reset assertion
   @(m_vif.clock iff m_vif.reset_n == 0);
-  //`uvm_info(get_type_name(), "Reset asserted.", UVM_HIGH)
+  `uvm_info(get_type_name(), "Reset asserted.", UVM_HIGH)
 endtask : handle_reset
 
 // collect item

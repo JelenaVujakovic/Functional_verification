@@ -46,7 +46,7 @@ task axi_lite_driver::run_phase(uvm_phase phase);
   super.run_phase(phase);
 
   // init signals
-  `uvm_info(get_type_name(), $sformatf("Driver AXI LITE initialization "),UVM_LOW)
+  //`uvm_info(get_type_name(), $sformatf("Driver AXI LITE initialization "),UVM_LOW)
   m_vif.s_axi_awaddr = 'h0;
   m_vif.s_axi_awvalid = 0;
   m_vif.s_axi_wdata ='h0;

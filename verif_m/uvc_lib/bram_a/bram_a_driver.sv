@@ -42,7 +42,7 @@ task bram_a_driver::run_phase(uvm_phase phase);
 
   // init signals
   m_vif.input_data = 0;
-  `uvm_info(get_type_name(), $sformatf("Driver BRAM A initialization input_data=%d ", m_vif.input_data),UVM_LOW)
+ // `uvm_info(get_type_name(), $sformatf("Driver BRAM A initialization input_data=%d ", m_vif.input_data),UVM_LOW)
 
   forever begin
     seq_item_port.get_next_item(m_req);
@@ -68,7 +68,7 @@ task bram_a_driver::process_item(bram_a_item item);
     else begin
         item.m_address = (m_vif.addra/4); 
         m_vif.input_data <= item.m_input_data;
-        `uvm_info(get_type_name(), $sformatf("Data is %d, adress is %d",m_vif.input_data,item.m_address),UVM_LOW)  
+       `uvm_info(get_type_name(), $sformatf("Data is %d, adress is %d",m_vif.input_data,item.m_address),UVM_LOW)  
     end              
 
 endtask : process_item

@@ -28,8 +28,6 @@ class bram_b_monitor extends uvm_monitor;
   extern virtual task handle_reset();
   // collect item
   extern virtual task collect_item();
-  // print item
-  extern virtual function void print_item(bram_b_item item);
 
 endclass : bram_b_monitor
 
@@ -64,6 +62,7 @@ task bram_b_monitor::run_phase(uvm_phase phase);
     join_any // run_phase_fork_block
     disable fork;
   end
+
 endtask : run_phase
 
 // handle reset
@@ -80,33 +79,17 @@ task bram_b_monitor::collect_item();
   `uvm_info(get_type_name(), "Reset de-asserted. Starting to collect items...", UVM_HIGH)
   
   forever begin    
-    // wait signal change
-    @(posedge m_vif.clock iff m_vif.reset_n === 1);
     
-    // begin transaction recording
-    void'(begin_tr(m_item, "bram_b item"));
+     @(posedge m_vif.clock iff m_vif.web=== 1'b1); 
+     m_item.m_addr_b_out = m_vif.addrb; 
+     m_item.m_data_b_out = m_vif.data_b_out; 
+     m_item.m_wr_en= m_vif.web;
     
-    // collect item
-    m_item.m_data_b_out = m_vif.data_b_out;
-    m_item.m_addr_b_out = m_vif.addrb;
-    m_item.m_wr_en = m_vif.web;
-    // wait signal change
-    @(posedge m_vif.clock iff m_vif.web === 0);
-    
-    // end transaction recording
-    end_tr(m_item);
-    
-    // print item
-    print_item(m_item);
-    
+   //print item
+   `uvm_info(get_type_name(), $sformatf("Address of B is: %d, data is : %d", m_item.m_addr_b_out, m_item.m_data_b_out), UVM_INFO)
     // write analysis port
-    m_aport.write(m_item);    
+    m_aport.write(m_item);   
   end // forever begin  
 endtask : collect_item
-
-// print item
-function void bram_b_monitor::print_item(bram_b_item item);
-  `uvm_info(get_type_name(), $sformatf("Item collected: \n%s", item.sprint()), UVM_HIGH)
-endfunction : print_item
 
 `endif // BRAM_B_MONITOR_SV

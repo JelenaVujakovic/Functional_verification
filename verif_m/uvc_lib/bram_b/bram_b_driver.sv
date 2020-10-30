@@ -60,8 +60,7 @@ task bram_b_driver::process_item(bram_b_item item);
   wait (m_vif.reset_n == 1);
   
   // drive signals
- // @(posedge m_vif.clock iff m_vif.enable_b=== 1'b1);
-  //  m_vif.addr_b<= item.m_addr_c;
+ 
     
 endtask : process_item
 
