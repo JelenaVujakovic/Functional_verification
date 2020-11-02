@@ -55,7 +55,6 @@ endtask : run_phase
 task bram_a_driver::process_item(bram_a_item item);
   // print item
   `uvm_info(get_type_name(), $sformatf("Item to be driven: \n%s", item.sprint()), UVM_HIGH)
-  `uvm_info(get_type_name(), $sformatf("Task BRAM A initialization addr=%d, input_data=%d ",m_vif.addra, m_vif.input_data),UVM_LOW)
   // wait until reset is de-asserted
   wait (m_vif.reset_n == 1);
   
