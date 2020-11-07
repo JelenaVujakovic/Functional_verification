@@ -16,7 +16,7 @@ class scrambler_ip_env_top extends uvm_env;
   
   scrambler_ip_virtual_sequencer m_virt_seqr;
   scrambler_ip_scoreboard m_scoreboard;
-  //scrambler_ip_coverage_collector m_coverage;
+ 
 
 
   // constructor
@@ -53,7 +53,7 @@ function void scrambler_ip_env_top::build_phase(uvm_phase phase);
   m_bram_b_env = bram_b_env::type_id::create("m_bram_b_env", this);
   m_virt_seqr = scrambler_ip_virtual_sequencer::type_id::create("m_virt_seqr", this);
   m_scoreboard = scrambler_ip_scoreboard::type_id::create("m_scoreboard", this);
- // m_coverage = scrambler_ip_coverage_collector::type_id::create("m_coverage", this);
+ 
   
 endfunction : build_phase
 

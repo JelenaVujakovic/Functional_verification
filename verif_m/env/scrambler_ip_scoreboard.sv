@@ -68,14 +68,14 @@ function void scrambler_ip_scoreboard::write_axi_lite(axi_lite_item m_axi_item);
   
     //AXI LITE Register address check
     if(axi_clone_item.addr == READY_REGISTER || axi_clone_item.addr == START_REGISTER) begin
-        `uvm_info(get_type_name(), $sformatf("AXI DATA SCOREBOARD: \n%s", axi_clone_item.sprint()), UVM_INFO)
+     //   `uvm_info(get_type_name(), $sformatf("AXI DATA SCOREBOARD: \n%s", axi_clone_item.sprint()), UVM_INFO)
     end
     else begin
-        `uvm_error(get_type_name(), $sformatf("Register with the address of %d doesn't exist.",axi_clone_item.addr))
+      //  `uvm_error(get_type_name(), $sformatf("Register with the address of %d doesn't exist.",axi_clone_item.addr))
     end
 
     //ispisivanje item-a za info
-    `uvm_info(get_type_name(), $sformatf("AXI DATA SCOREBOARD: \n%s", axi_clone_item.sprint()), UVM_INFO)
+   // `uvm_info(get_type_name(), $sformatf("AXI DATA SCOREBOARD: \n%s", axi_clone_item.sprint()), UVM_INFO)
 
 endfunction:write_axi_lite
 
@@ -88,12 +88,12 @@ function void scrambler_ip_scoreboard::write_bram_a(bram_a_item m_bram_a_item);
 
    //Check if m_ena signal is set to 1
    asrt_m_ena : assert (bram_a_clone.m_ena == 1)
-        `uvm_info(get_type_name(), "Check succesfull: m_ena asserted", UVM_HIGH)
+       // `uvm_info(get_type_name(), "Check succesfull: m_ena asserted", UVM_HIGH)
    else
 	    `uvm_error(get_type_name(), $sformatf("Observed m_ena signal mismatch: m_ena = %0d", bram_a_clone.m_ena))
 
   //info za debug
-  `uvm_info(get_type_name(), $sformatf("BRAM A SCOREBOARD: \n%s", bram_a_clone.sprint()), UVM_INFO)
+  //`uvm_info(get_type_name(), $sformatf("BRAM A SCOREBOARD: \n%s", bram_a_clone.sprint()), UVM_INFO)
 
 	
 endfunction: write_bram_a
@@ -107,14 +107,14 @@ function void scrambler_ip_scoreboard::write_bram_b(bram_b_item m_bram_b_item);
     
     //Check if write enable signal is set to 1
     asrt_m_wr_en : assert (bram_b_clone.m_wr_en == 1)
-	    `uvm_info(get_type_name(), "Check succesfull: m_wr_en asserted", UVM_HIGH)
+	//    `uvm_info(get_type_name(), "Check succesfull: m_wr_en asserted", UVM_HIGH)
 	else
-	    `uvm_error(get_type_name(), $sformatf("Observed m_enb signal mismatch: m_wr_en = %0d", bram_b_clone.m_wr_en))
+	 //   `uvm_error(get_type_name(), $sformatf("Observed m_enb signal mismatch: m_wr_en = %0d", bram_b_clone.m_wr_en))
    
     //Check bram b scrambled addresses
     scrambler_address_checking(bram_a_que,bram_b_que);
     //info za debug
-    `uvm_info(get_type_name(), $sformatf("BRAM B SCOREBOARD: \n%s", bram_b_clone.sprint()), UVM_INFO)
+   // `uvm_info(get_type_name(), $sformatf("BRAM B SCOREBOARD: \n%s", bram_b_clone.sprint()), UVM_INFO)
 
     
 endfunction: write_bram_b
@@ -128,8 +128,8 @@ function void scrambler_ip_scoreboard::scrambler_address_checking(ref int unsign
         for(int i = 1; i <=BLOCK_SIZE; i++) begin
 	        bram_a_address = bram_a_que.pop_front();
 		    bram_b_address = bram_b_que.pop_front();
-            `uvm_info(get_type_name(), $sformatf("Bram A address is: %d", bram_a_address), UVM_INFO)
-            `uvm_info(get_type_name(), $sformatf("Bram B address is: %d", bram_b_address), UVM_INFO)
+          //  `uvm_info(get_type_name(), $sformatf("Bram A address is: %d", bram_a_address), UVM_INFO)
+          //  `uvm_info(get_type_name(), $sformatf("Bram B address is: %d", bram_b_address), UVM_INFO)
 		    //Calculate value of bram b address according to specification
 		    bram_b_address_calc = (8192 - n + ((bram_a_address+4)/4)-1)*4;
 		    if (((bram_a_address+4)/4)%4 == 0)
@@ -137,21 +137,21 @@ function void scrambler_ip_scoreboard::scrambler_address_checking(ref int unsign
 
 		    //Compare values of calculated and received address of bram b
 	        asrt_addr_a_eq_addr_b : assert (bram_b_address == bram_b_address_calc)
-	            `uvm_info(get_type_name(), "Check succesfull: bram_b_address == bram_b_address_calc", UVM_INFO)
+	        //    `uvm_info(get_type_name(), "Check succesfull: bram_b_address == bram_b_address_calc", UVM_INFO)
 		    else
-			    `uvm_error(get_type_name(), $sformatf("Observed bram_b_address and bram_b_address_calc mismatch: bram_b_address = %0d, bram_b_address_calc = %0d", bram_b_address, bram_b_address_calc))
+			//    `uvm_error(get_type_name(), $sformatf("Observed bram_b_address and bram_b_address_calc mismatch: bram_b_address = %0d, bram_b_address_calc = %0d", bram_b_address, bram_b_address_calc))
 	        //Count transactions
 		    number_of_transactions++ ;
         end
     end   
     else begin
         start_flag=0;
-        `uvm_info(get_type_name(), "BRAM que size less than BLOCK SIZE.\n",UVM_HIGH)
+    /*    `uvm_info(get_type_name(), "BRAM que size less than BLOCK SIZE.\n",UVM_HIGH)
         `uvm_info(get_type_name(), $sformatf("Bram A que block size is is: %d", bram_b_que.size()), UVM_INFO)
-        `uvm_info(get_type_name(), $sformatf("Bram A que block size is is: %d", bram_b_que.size()), UVM_INFO)
+        `uvm_info(get_type_name(), $sformatf("Bram A que block size is is: %d", bram_b_que.size()), UVM_INFO)*/
     end
 
-   `uvm_info(get_type_name(), $sformatf("Number of transactions: %d", number_of_transactions), UVM_INFO)
+//   `uvm_info(get_type_name(), $sformatf("Number of transactions: %d", number_of_transactions), UVM_INFO)
 
 endfunction: scrambler_address_checking
 `endif 

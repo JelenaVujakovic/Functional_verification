@@ -57,7 +57,7 @@ task axi_lite_driver::run_phase(uvm_phase phase);
   m_vif.s_axi_rdata = 'h0;
   m_vif.s_axi_rvalid = 0;
   m_vif.s_axi_bready = 0;
-  `uvm_info(get_type_name(), $sformatf("Driver AXI LITE initialization addr=%d, input_data=%d ",m_vif.s_axi_awaddr , m_vif.s_axi_wdata),UVM_LOW)
+  //`uvm_info(get_type_name(), $sformatf("Driver AXI LITE initialization addr=%d, input_data=%d ",m_vif.s_axi_awaddr , m_vif.s_axi_wdata),UVM_LOW)
   forever begin
     seq_item_port.get_next_item(m_req);
     process_item(m_req);
@@ -67,7 +67,7 @@ endtask : run_phase
 
 // process item
 task axi_lite_driver::process_item(axi_lite_item item);
- `uvm_info(get_type_name(), $sformatf("Task AXI LITE after initialization addr=%d, input_data=%d ",m_vif.s_axi_awaddr , m_vif.s_axi_wdata),UVM_LOW)
+ //`uvm_info(get_type_name(), $sformatf("Task AXI LITE after initialization addr=%d, input_data=%d ",m_vif.s_axi_awaddr , m_vif.s_axi_wdata),UVM_LOW)
  @(posedge m_vif.clock iff m_vif.reset_n==1);
  fork
   begin
@@ -92,7 +92,7 @@ endtask : process_item
       m_vif.s_axi_wdata = item.data;
       m_vif.s_axi_bready = 1;
       @(posedge m_vif.clock iff m_vif.s_axi_awready==1);
-      `uvm_info(get_type_name(), $sformatf("Item to be driven: \n%s", item.sprint()), UVM_HIGH)
+      //`uvm_info(get_type_name(), $sformatf("Item to be driven: \n%s", item.sprint()), UVM_HIGH)
       @(posedge m_vif.clock iff m_vif.s_axi_awready==0);
       m_vif.s_axi_awvalid = 0;
       m_vif.s_axi_awaddr = 4'b0;
@@ -112,7 +112,7 @@ endtask : process_item
       @(posedge m_vif.clock iff m_vif.s_axi_arready==1);
       @(posedge m_vif.clock iff m_vif.s_axi_arready==0);
       m_vif.s_axi_arvalid = 0;
-      `uvm_info(get_type_name(), $sformatf("Item to be driven: \n%s", item.sprint()), UVM_HIGH)
+     // `uvm_info(get_type_name(), $sformatf("Item to be driven: \n%s", item.sprint()), UVM_HIGH)
   end
 
  endtask: read_trans

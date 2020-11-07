@@ -19,7 +19,7 @@ class axi_lite_agent extends uvm_agent;
   axi_lite_driver m_driver;
   axi_lite_sequencer m_sequencer;
   axi_lite_monitor m_monitor;
-  //axi_lite_cov m_cov;
+  axi_lite_coverage m_coverage;
   
   // constructor
   extern function new(string name, uvm_component parent);
@@ -63,7 +63,7 @@ function void axi_lite_agent::build_phase(uvm_phase phase);
   end
   m_monitor = axi_lite_monitor::type_id::create("m_monitor", this);
   if (m_cfg.m_has_coverage == 1) begin
-   // m_cov = axi_lite_cov::type_id::create("m_cov", this);
+    m_coverage = axi_lite_coverage::type_id::create("m_coverage", this);
   end  
 endfunction : build_phase
 
@@ -77,7 +77,7 @@ function void axi_lite_agent::connect_phase(uvm_phase phase);
   end
   m_monitor.m_aport.connect(m_aport);
   if (m_cfg.m_has_coverage == 1) begin
-   // m_monitor.m_aport.connect(m_cov.analysis_export);
+    m_monitor.m_aport.connect(m_coverage.analysis_export);
   end
   
   // assign interface
@@ -93,7 +93,7 @@ function void axi_lite_agent::connect_phase(uvm_phase phase);
   end
   m_monitor.m_cfg = m_cfg;
   if (m_cfg.m_has_coverage == 1) begin
-   // m_cov.m_cfg = m_cfg;
+    m_coverage.m_cfg = m_cfg;
   end
 endfunction : connect_phase
 
@@ -102,4 +102,4 @@ function void axi_lite_agent::print_cfg();
   `uvm_info(get_type_name(), $sformatf("Configuration: \n%s", m_cfg.sprint()), UVM_HIGH)
 endfunction : print_cfg
 
-`endif // AXI_LITE_AGENT_SV
+`endif // axi_lite_AGENT_SV

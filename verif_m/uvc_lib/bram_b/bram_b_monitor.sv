@@ -76,7 +76,7 @@ endtask : handle_reset
 task bram_b_monitor::collect_item();  
   // wait until reset is de-asserted
   wait (m_vif.reset_n == 1);
-  `uvm_info(get_type_name(), "Reset de-asserted. Starting to collect items...", UVM_HIGH)
+ // `uvm_info(get_type_name(), "Reset de-asserted. Starting to collect items...", UVM_HIGH)
   
   forever begin    
     
@@ -86,7 +86,7 @@ task bram_b_monitor::collect_item();
      m_item.m_wr_en= m_vif.web;
     
    //print item
-   `uvm_info(get_type_name(), $sformatf("Address of B is: %d, data is : %d", m_item.m_addr_b_out, m_item.m_data_b_out), UVM_INFO)
+  // `uvm_info(get_type_name(), $sformatf("Address of B is: %d, data is : %d", m_item.m_addr_b_out, m_item.m_data_b_out), UVM_INFO)
     // write analysis port
     m_aport.write(m_item);   
   end // forever begin  

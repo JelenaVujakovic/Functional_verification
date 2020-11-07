@@ -1,7 +1,7 @@
 `ifndef BRAM_A_COVERAGE_SV
 `define BRAM_A_COVERAGE_SV
 
-class bram_a_coverage extends uvm_subscriber #(bram_a_item);
+class bram_a_coverage extends uvm_subscriber#(bram_a_item);
   
   // registration macro
   `uvm_component_utils(bram_a_coverage)
@@ -10,8 +10,6 @@ class bram_a_coverage extends uvm_subscriber #(bram_a_item);
   bram_a_agent_cfg m_cfg;
   
   // coverage fields 
-   bit [31:0] input_data_cov;
-   int number_of_bram_a_data_cov;
    bram_a_item bram_a_clone_item;
 
   // coverage groups
@@ -30,7 +28,7 @@ class bram_a_coverage extends uvm_subscriber #(bram_a_item);
         bins med_addr_range = { [10922:21842] };
         bins high_addr_range = { [21843:32764] };
     }
-    cross_bram_a_addr_and_data: cross bram_a_clone_item.m_address,bram_a_clone_item.m_input_data;
+    //cross_bram_a_addr_and_data: cross bram_a_clone_item.m_address,bram_a_clone_item.m_input_data;
     
   endgroup : bram_a_cg
   
@@ -50,8 +48,6 @@ endfunction : new
 // analysis implementation port function
 function void bram_a_coverage::write(bram_a_item t);
   $cast(bram_a_clone_item,t.clone());
-     number_of_bram_a_data_cov = bram_a_clone_item.m_input_data;
-     number_of_bram_a_data_cov++;
 	 bram_a_cg.sample();
 endfunction : write
 `endif 

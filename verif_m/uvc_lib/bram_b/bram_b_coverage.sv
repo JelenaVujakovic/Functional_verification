@@ -10,8 +10,6 @@ class bram_b_coverage extends uvm_subscriber #(bram_b_item);
   bram_b_agent_cfg m_cfg;
   
   // coverage fields 
-   bit [31:0] data_b_out_cov;
-   int number_of_data_b_out_cov;
    bram_b_item bram_b_clone_item;
 
   // coverage groups
@@ -29,7 +27,7 @@ class bram_b_coverage extends uvm_subscriber #(bram_b_item);
         bins med_addr_range = { [10922:21842] };
         bins high_addr_range = { [21843:32764] };
     }
-    cross_bram_b_addr_and_data: cross bram_b_clone_item.m_addr_b_out,bram_b_clone_item.m_data_b_out;
+    //cross_bram_b_addr_and_data: cross bram_b_clone_item.m_addr_b_out,bram_b_clone_item.m_data_b_out;
    
   endgroup : bram_b_cg
   
@@ -49,8 +47,6 @@ endfunction : new
 // analysis implementation port function
 function void bram_b_coverage::write(bram_b_item t);
  $cast(bram_b_clone_item,t.clone());
-  data_b_out_cov = bram_b_clone_item.m_data_b_out;
-  number_of_data_b_out_cov++;
   bram_b_cg.sample();
 endfunction : write
 

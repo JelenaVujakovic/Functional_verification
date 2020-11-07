@@ -70,7 +70,7 @@ endtask : run_phase
 task axi_lite_monitor::handle_reset();
   // wait reset assertion
   @(m_vif.clock iff m_vif.reset_n == 0);
-  `uvm_info(get_type_name(), "Reset asserted.", UVM_HIGH)
+  //`uvm_info(get_type_name(), "Reset asserted.", UVM_HIGH)
 endtask : handle_reset
 
 // collect item
@@ -78,7 +78,7 @@ task axi_lite_monitor::collect_item();
   
   // wait until reset is de-asserted
   @(posedge m_vif.clock iff m_vif.reset_n == 1);
-  `uvm_info(get_type_name(), "Reset de-asserted. Starting to collect items...", UVM_LOW)
+ // `uvm_info(get_type_name(), "Reset de-asserted. Starting to collect items...", UVM_LOW)
   
     // WRITE
    fork
@@ -88,8 +88,8 @@ task axi_lite_monitor::collect_item();
         m_item.addr = m_vif.s_axi_awaddr;
         m_item.data = m_vif.s_axi_wdata;
         m_item.rw_op = write;
-        `uvm_info(get_type_name(), " --- WRITE --- ", UVM_LOW)
-        `uvm_info(get_type_name(), $sformatf("Item collected: \n%s", m_item.sprint()), UVM_HIGH)
+      //  `uvm_info(get_type_name(), " --- WRITE --- ", UVM_LOW)
+      //  `uvm_info(get_type_name(), $sformatf("Item collected: \n%s", m_item.sprint()), UVM_HIGH)
         m_aport.write(m_item);
      end
     end
@@ -102,7 +102,7 @@ task axi_lite_monitor::collect_item();
        m_item.data = m_vif.s_axi_rdata;
        m_item.rw_op = read; 
        `uvm_info(get_type_name(), " --- READ --- ", UVM_LOW)
-       `uvm_info(get_type_name(), $sformatf("Item collected: \n%s", m_item.sprint()), UVM_HIGH)
+      // `uvm_info(get_type_name(), $sformatf("Item collected: \n%s", m_item.sprint()), UVM_HIGH)
        m_aport.write(m_item);
      end
     end
@@ -111,7 +111,7 @@ endtask : collect_item
 
 // print item
 function void axi_lite_monitor::print_item(axi_lite_item item);
-  `uvm_info(get_type_name(), $sformatf("Item collected: \n%s", item.sprint()), UVM_HIGH)
+ // `uvm_info(get_type_name(), $sformatf("Item collected: \n%s", item.sprint()), UVM_HIGH)
 endfunction : print_item
 
 `endif // AXI_LITE_MONITOR_SV

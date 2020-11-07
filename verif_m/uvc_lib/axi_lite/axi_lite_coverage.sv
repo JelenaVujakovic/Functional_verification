@@ -1,7 +1,7 @@
 `ifndef AXI_LITE_COVERAGE_SV
 `define AXI_LITE_COVERAGE_SV
 
-class axi_lite_coverage extends uvm_subscriber #(axi_lite_item);
+class axi_lite_coverage extends uvm_subscriber#(axi_lite_item);
   
   // registration macro
   `uvm_component_utils(axi_lite_coverage)
@@ -75,7 +75,7 @@ endfunction : new
 
 // analysis implementation port function
 function void axi_lite_coverage::write(axi_lite_item t);
-  //m_signal_value_cov = item.m_signal_value;
+  $cast(axi_lite_clone,t.clone());
   axi_lite_cg.sample();
 endfunction : write
 
