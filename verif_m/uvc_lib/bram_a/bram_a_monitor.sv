@@ -70,14 +70,14 @@ endtask : run_phase
 task bram_a_monitor::handle_reset();
   // wait reset assertion
   @(m_vif.reset_n iff m_vif.reset_n == 0);
-  //`uvm_info(get_type_name(), "Reset asserted.", UVM_HIGH)
+  `uvm_info(get_type_name(), "Reset asserted.", UVM_HIGH)
 endtask : handle_reset
 
 // collect item
 task bram_a_monitor::collect_item();  
   // wait until reset is de-asserted
   wait (m_vif.reset_n == 1);
- // `uvm_info(get_type_name(), "Reset de-asserted. Starting to collect items...", UVM_HIGH)
+  `uvm_info(get_type_name(), "Reset de-asserted. Starting to collect items...", UVM_HIGH)
   
   forever begin   
     
@@ -90,16 +90,16 @@ task bram_a_monitor::collect_item();
 
      print_item(m_item);
     //print item
-    //`uvm_info(get_type_name(), $sformatf("Address of A is: \t%d, data is : \t%d", m_item.m_address, m_vif.input_data), UVM_HIGH)
+    `uvm_info(get_type_name(), $sformatf("Address of A is: \t%d, data is : \t%d", m_item.m_address, m_vif.input_data), UVM_HIGH)
     
     // write analysis port
     m_aport.write(m_item);    
-  end // forever begin  
+  end   
 endtask : collect_item
 
 // print item
 function void bram_a_monitor::print_item(bram_a_item item);
- // `uvm_info(get_type_name(), $sformatf("Item collected: \n%s", item.sprint()), UVM_HIGH)
+  `uvm_info(get_type_name(), $sformatf("Item collected: \n%s", item.sprint()), UVM_HIGH)
 endfunction : print_item
 
 `endif // BRAM_A_MONITOR_SV

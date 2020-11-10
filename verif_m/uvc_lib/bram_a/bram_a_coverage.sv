@@ -15,6 +15,7 @@ class bram_a_coverage extends uvm_subscriber#(bram_a_item);
   // coverage groups
   covergroup bram_a_cg @(posedge bram_a_clone_item.m_ena);
     option.per_instance = 1;
+    option.comment = "BRAM A coverage group";
 
     //Cover randomization of data
     bram_a_data: coverpoint bram_a_clone_item.m_input_data {
@@ -28,7 +29,6 @@ class bram_a_coverage extends uvm_subscriber#(bram_a_item);
         bins med_addr_range = { [10922:21842] };
         bins high_addr_range = { [21843:32764] };
     }
-    //cross_bram_a_addr_and_data: cross bram_a_clone_item.m_address,bram_a_clone_item.m_input_data;
     
   endgroup : bram_a_cg
   

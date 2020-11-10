@@ -16,6 +16,7 @@ class axi_lite_coverage extends uvm_subscriber#(axi_lite_item);
   // coverage groups
   covergroup axi_lite_cg;
     option.per_instance = 1;
+    option.comment = "AXI-LITE coverage group";
     
     //Cover register address access
     axi_lite_register_address : coverpoint axi_lite_clone.addr{
@@ -23,9 +24,12 @@ class axi_lite_coverage extends uvm_subscriber#(axi_lite_item);
         bins READY_REGISTER = {'h8};
     }
    
-    //Cover both operation type (READ/WRITE)
-    axi_lite_read_write : coverpoint axi_lite_clone.rw_op {
+    //Cover operation type (READ)
+    axi_lite_read : coverpoint axi_lite_clone.rw_op == read {
         bins read = {0};
+    }
+    //Cover operation type (WRITE)
+    axi_lite_write : coverpoint axi_lite_clone.rw_op != read {
         bins write = {1};
     }
     //Cover data
@@ -33,30 +37,20 @@ class axi_lite_coverage extends uvm_subscriber#(axi_lite_item);
         bins low = {0};
         bins high = {1};
     }
-    //Cover rw operation on START REGISTER address
-    cross_axi_lite_rw_op_and_start_reg_addr: cross axi_lite_register_address,axi_lite_read_write{
-        bins start_register_read = binsof(addr) intersect {'h4} && binsof(rw) intersect {0};
-        bins start_register_write = binsof(addr) intersect {'h4} && binsof(rw) intersect {1};
-    }
-    //Cover read operation on READY REGISTER address,READY REGISTER read-only
-    cross_axi_lite_read_op_and_ready_reg_addr: cross axi_lite_register_address,axi_lite_read_write{
-        bins ready_register_read = binsof(addr) intersect {'h8} && binsof(rw) intersect {0};
-    }
+
     //Cover ready register value
-    cross_axi_lite_data_value_and_ready_reg_addr: cross axi_lite_register_address,axi_lite_data{
-        bins ready_register_read = binsof(addr.READY_REGISTER) && binsof(data);
-    }
-    //Cover start register value
-    cross_axi_lite_data_value_and_start_reg_addr: cross axi_lite_register_address,axi_lite_data{
-        bins start_register_read = binsof(addr.START_REGISTER) && binsof(data);
-    }
-    //Cover READY_REGISTER = '1' -> START_REGISTER = '0'
-    cross_check_register_value: cross axi_lite_register_address,axi_lite_data{
-        bins ready_register_value = binsof(addr.READY_REGISTER) && binsof(data) intersect {1};        
-        bins start_register_value = binsof(addr.START_REGISTER) && binsof(data) intersect {0};
-        
+    cross_axi_lite_data_value_and_reg_addr: cross axi_lite_register_address,axi_lite_data{
+        bins ready_register_read = binsof(addr) intersect {'h8} && binsof(data);
+        bins start_register_read = binsof(addr) intersect {'h4} && binsof(data);
     }
     
+    //Cover read/write operation on register address
+    cross_axi_lite_read_operation_and_reg_addr: cross axi_lite_register_address,axi_lite_read,axi_lite_write{
+        bins start_register_read = binsof(addr) intersect{START_REGISTER} && binsof(axi_lite_read) intersect {0};
+        bins start_register_write = binsof(addr) intersect{START_REGISTER} && binsof(axi_lite_write) intersect {1};
+        bins ready_register_read = binsof(addr) intersect{READY_REGISTER} && binsof(axi_lite_read) intersect {0};
+        ignore_bins read_only_register_ready = binsof(addr) intersect{READY_REGISTER} && binsof(axi_lite_write) intersect {1};
+    }
        
   endgroup : axi_lite_cg
   

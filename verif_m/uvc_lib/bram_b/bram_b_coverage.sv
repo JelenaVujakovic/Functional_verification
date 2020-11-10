@@ -15,6 +15,7 @@ class bram_b_coverage extends uvm_subscriber #(bram_b_item);
   // coverage groups
   covergroup bram_b_cg;
     option.per_instance = 1;
+    option.comment = "BRAM B coverage group";
 
     bram_b_data: coverpoint bram_b_clone_item.m_data_b_out {
         bins low = { [0:500] };
@@ -27,7 +28,6 @@ class bram_b_coverage extends uvm_subscriber #(bram_b_item);
         bins med_addr_range = { [10922:21842] };
         bins high_addr_range = { [21843:32764] };
     }
-    //cross_bram_b_addr_and_data: cross bram_b_clone_item.m_addr_b_out,bram_b_clone_item.m_data_b_out;
    
   endgroup : bram_b_cg
   

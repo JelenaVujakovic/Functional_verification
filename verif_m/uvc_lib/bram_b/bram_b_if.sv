@@ -13,7 +13,5 @@ interface bram_b_if(input clock, input reset_n);
   logic web;
   
 endinterface : bram_b_if
-//assert web menja vrednost
-//asert enb menja vrednost 0->1
 
 `endif // BRAM_B_IF_SV

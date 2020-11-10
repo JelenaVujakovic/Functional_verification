@@ -28,7 +28,7 @@ class axi_lite_write_start_register_value_seq extends axi_lite_basic_seq;
   start_item(req);
   
   if(!req.randomize() with {addr == local::addr; data == local::data; rw_op == local::rw_op; }) begin
-    //`uvm_fatal(get_type_name(), "Failed to randomize.")
+    `uvm_fatal(get_type_name(), "Failed to randomize.")
   end  
   
   finish_item(req);
