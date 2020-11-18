@@ -8,7 +8,7 @@ class test_scrambler_ip_base extends uvm_test;
   
   // component instance
   scrambler_ip_env_top m_scrambler_ip_env_top;
-  //wb2uart_vir_sequence m_vseq;
+  
   
   // configuration instance
   scrambler_ip_top_cfg m_cfg;
